@@ -146,7 +146,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 
-<!-- TIER 2: Registered Members from API -->
+<!-- TIER 2: Registered Members from API (Bounty Poster Style) -->
 <script>
 (async function loadTier2(){
   try{
@@ -154,7 +154,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const members=await res.json();
     if(!members.length)return;
     
-    // Find the organisers section or crew section
     const sections=document.querySelectorAll('section');
     let targetSection=null;
     sections.forEach(s=>{
@@ -162,39 +161,70 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     if(!targetSection)targetSection=sections[sections.length-2];
     
-    // Create Tier 2 section
     const tier2=document.createElement('section');
     tier2.id='tier2-members';
-    tier2.style.cssText='background:#0D0B0A;border-top:6px solid #D4AF37;padding:60px 24px;';
+    tier2.style.cssText='background:#F7F2E7;border-top:8px solid #111;padding:60px 24px;background-image:radial-gradient(circle,rgba(0,0,0,0.06) 1px,transparent 1px);background-size:12px 12px;';
     tier2.innerHTML=`
-      <div style="max-width:1100px;margin:0 auto;">
-        <div style="text-align:center;margin-bottom:40px;">
-          <span style="display:inline-block;background:#111;color:#D4AF37;font-family:'Bangers',Impact,sans-serif;font-size:0.7rem;letter-spacing:0.2em;padding:6px 20px;border:2px solid #D4AF37;box-shadow:3px 3px 0 #000;margin-bottom:12px;">TIER 2 — REGISTERED MEMBERS</span>
-          <h2 style="font-family:'Bangers',Impact,sans-serif;font-size:clamp(1.8rem,4vw,2.8rem);color:#F7F2E7;letter-spacing:0.06em;line-height:1.1;">THE VOID DEV COMMUNITY.</h2>
-          <p style="color:#888;font-size:0.85rem;margin-top:8px;font-family:'Space Grotesk',sans-serif;">${members.length} member${members.length>1?'s':''} have joined the platform</p>
+      <div style="max-width:1200px;margin:0 auto;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:40px;border-bottom:4px solid #111;padding-bottom:16px;">
+          <h2 style="font-family:'Bangers',Impact,sans-serif;font-size:clamp(1.5rem,3.5vw,2.2rem);color:#111;letter-spacing:0.06em;display:flex;align-items:center;gap:10px;">
+            <span style="color:#D4AF37;">⚔</span> TIER 2 // VOID DEV MEMBERS
+          </h2>
+          <span style="font-family:'Space Mono',monospace;font-size:0.65rem;font-weight:700;letter-spacing:0.1em;background:#111;color:#D4AF37;padding:6px 16px;border:2px solid #D4AF37;box-shadow:2px 2px 0 #000;">
+            👥 ${members.length} MEMBERS
+          </span>
         </div>
-        <div id="tier2-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:20px;"></div>
+        <div id="tier2-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:28px;justify-items:center;"></div>
       </div>
     `;
     targetSection.parentNode.insertBefore(tier2,targetSection.nextSibling);
     
-    // Render member cards
     const grid=document.getElementById('tier2-grid');
-    members.forEach(m=>{
-      const initials=m.name.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
+    members.forEach((m,i)=>{
+      const name=m.name.split(' ')[0].toUpperCase();
+      const bounty=String((Math.floor(Math.random()*4)+1)*100000000).replace(/\B(?=(\d{3})+(?!\d))/g,',');
       const photoHtml=m.photo_url
-        ?`<img src="${m.photo_url}" alt="${m.name}" style="width:80px;height:80px;border-radius:50%;object-fit:cover;border:3px solid #D4AF37;box-shadow:2px 2px 0 #000;">`
-        :`<div style="width:80px;height:80px;border-radius:50%;background:#1A1513;border:3px solid #D4AF37;display:flex;align-items:center;justify-content:center;font-family:'Bangers',sans-serif;font-size:1.5rem;color:#D4AF37;box-shadow:2px 2px 0 #000;">${initials}</div>`;
-      const date=new Date(m.joined_at).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+        ?`<img src="${m.photo_url}" alt="${m.name}" style="width:100%;height:100%;object-fit:cover;display:block;">`
+        :`<div style="width:100%;height:100%;background:#E8E0D0;display:flex;align-items:center;justify-content:center;font-family:'Bangers',sans-serif;font-size:3rem;color:#2B1B17;">${m.name.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2)}</div>`;
+      
       const card=document.createElement('div');
-      card.style.cssText='background:#1A1513;border:3px solid #2B1B17;padding:24px;text-align:center;box-shadow:4px 4px 0 #000;transition:all 0.2s;';
-      card.onmouseenter=()=>{card.style.borderColor='#D4AF37';card.style.transform='translateY(-4px)';};
-      card.onmouseleave=()=>{card.style.borderColor='#2B1B17';card.style.transform='none';};
+      card.style.cssText='width:100%;max-width:210px;display:flex;flex-direction:column;align-items:center;transition:transform 0.2s;cursor:default;';
+      card.onmouseenter=()=>{card.style.transform='translateY(-6px) scale(1.02)';};
+      card.onmouseleave=()=>{card.style.transform='none';};
       card.innerHTML=`
-        <div style="display:flex;justify-content:center;margin-bottom:14px;">${photoHtml}</div>
-        <h3 style="font-family:'Bangers',Impact,sans-serif;font-size:1.15rem;color:#F7F2E7;letter-spacing:0.06em;">${m.name.toUpperCase()}</h3>
-        <span style="display:inline-block;margin-top:6px;padding:3px 12px;background:#111;border:1px solid #D4AF37;font-family:'Space Mono',monospace;font-size:0.55rem;color:#D4AF37;letter-spacing:0.1em;font-weight:700;">MEMBER</span>
-        <p style="margin-top:8px;font-family:'Space Mono',monospace;font-size:0.5rem;color:#555;letter-spacing:0.08em;">JOINED ${date.toUpperCase()}</p>
+        <!-- Top clip -->
+        <div style="width:86%;height:8px;background:#2B1B17;border:1px solid #111;box-shadow:1px 1px 0 #111;border-radius:3px 3px 0 0;display:flex;justify-content:center;align-items:center;z-index:2;">
+          <div style="width:20px;height:2px;border-radius:1px;background:#D4AF37;"></div>
+        </div>
+        <!-- Main Card -->
+        <div style="width:100%;background:linear-gradient(145deg,#F7F2E7 0%,#EDE5D2 50%,#F7F2E7 100%);border:3px solid #111;box-shadow:4px 4px 0 #000;position:relative;overflow:hidden;">
+          <!-- Header -->
+          <div style="text-align:center;padding:10px 8px 6px;border-bottom:2px solid #111;background:linear-gradient(135deg,#F7F2E7,#EDE5D2);">
+            <span style="font-family:'Space Mono',monospace;font-size:0.5rem;font-weight:700;letter-spacing:0.15em;color:#8B0000;text-transform:uppercase;">MEMBER</span>
+            <h3 style="font-family:'Bangers',Impact,sans-serif;font-size:1.3rem;color:#111;letter-spacing:0.08em;line-height:1;margin-top:2px;display:flex;align-items:center;justify-content:center;gap:4px;">
+              <span style="color:#D4AF37;font-size:0.9rem;">⚔</span> ${name}
+            </h3>
+          </div>
+          <!-- Photo -->
+          <div style="margin:8px auto;width:82%;aspect-ratio:3/4;border:3px solid #111;box-shadow:inset 0 0 10px rgba(0,0,0,0.1),2px 2px 0 #111;overflow:hidden;background:#E8E0D0;">
+            ${photoHtml}
+          </div>
+          <!-- Bounty -->
+          <div style="padding:6px 10px 10px;border-top:2px solid #111;background:linear-gradient(135deg,#1A1513,#2B1B17);">
+            <div style="display:flex;align-items:center;justify-content:space-between;">
+              <div>
+                <span style="font-family:'Space Mono',monospace;font-size:0.45rem;font-weight:700;color:#888;letter-spacing:0.1em;display:block;">BOUNTY</span>
+                <span style="font-family:'Bangers',Impact,sans-serif;font-size:1rem;color:#D4AF37;letter-spacing:0.04em;">฿ ${bounty}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Bottom clip -->
+        <div style="width:90%;height:12px;background:#2B1B17;border:1px solid #111;box-shadow:1.5px 1.5px 0 #111;border-radius:0 0 4px 4px;z-index:2;display:flex;justify-content:space-between;align-items:center;padding:0 6px;margin-top:-1px;">
+          <div style="width:8px;height:8px;border-radius:50%;background:#D4AF37;"></div>
+          <span style="font-family:'Space Mono',monospace;font-size:0.4rem;font-weight:700;color:#F7F2E7;letter-spacing:0.1em;">COMMAND DIVISION</span>
+          <div style="width:8px;height:8px;border-radius:50%;background:#D4AF37;"></div>
+        </div>
       `;
       grid.appendChild(card);
     });
