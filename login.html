@@ -234,6 +234,38 @@
       letter-spacing:0.12em;color:#666;text-transform:uppercase;z-index:100;
     }
     .bottom-strip a{color:#D4AF37;text-decoration:none;}
+
+    /* MOBILE RESPONSIVE */
+    @media(max-width:900px){
+      .art-panel{display:none;}
+      .login-page{grid-template-columns:1fr;}
+      .form-panel{padding:40px 20px 80px;}
+      .topbar{padding:0 16px;height:48px;}
+      .topbar-brand{font-size:1.2rem;}
+      .smashing-flyer,.smash-trail,.thought-bubble{display:none;}
+    }
+    @media(max-width:600px){
+      .form-panel{padding:24px 16px 80px;}
+      .form-wrapper{max-width:100%;}
+      .section-title{font-size:1.8rem;}
+      .auth-tabs{margin:20px 0 16px;}
+      .auth-tab{padding:10px;font-size:0.85rem;}
+      .form-card{padding:20px 16px;}
+      .auth-form{gap:14px;}
+      .form-input{padding:12px 14px;font-size:0.85rem;}
+      .submit-btn{padding:14px;font-size:1.2rem;}
+      .bottom-strip{padding:6px 12px;font-size:0.5rem;}
+      .topbar-link{font-size:0.5rem;padding:4px 8px;}
+      .chapter-badge{font-size:0.55rem;padding:4px 12px;}
+      .section-desc{font-size:0.8rem;}
+    }
+    @media(max-width:380px){
+      .form-card{padding:16px 12px;}
+      .form-input{padding:10px 12px;font-size:0.8rem;border-width:2px;}
+      .submit-btn{font-size:1rem;padding:12px;border-width:2px;}
+      .auth-tabs{border-width:2px;}
+      .auth-tab:first-child{border-right-width:2px;}
+    }
   </style>
 </head>
 <body>
