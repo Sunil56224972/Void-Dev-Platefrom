@@ -170,6 +170,23 @@
     .auth-tab:hover:not(.active){background:#EDE5D2;color:#111;}
     .form-card{background:#fff;border:3px solid #111;box-shadow:4px 4px 0 #000;padding:28px;}
     .auth-form{display:flex;flex-direction:column;gap:18px;}
+    .photo-upload-area{
+      border:3px dashed #D4AF37;background:#FFF9E6;padding:20px;
+      text-align:center;cursor:pointer;transition:all 0.2s;position:relative;
+    }
+    .photo-upload-area:hover{background:#FFF3CC;border-color:#111;}
+    .photo-upload-area input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;}
+    .photo-upload-area .upload-icon{
+      font-size:2rem;display:block;margin-bottom:4px;
+    }
+    .photo-upload-area .upload-text{
+      font-family:'Space Mono',monospace;font-size:0.6rem;font-weight:700;
+      letter-spacing:0.12em;text-transform:uppercase;color:#666;
+    }
+    .photo-preview{
+      width:80px;height:80px;border-radius:50%;border:3px solid #D4AF37;
+      object-fit:cover;margin:8px auto 0;display:none;box-shadow:2px 2px 0 #000;
+    }
     .auth-form.hidden{display:none;}
     .form-label{
       display:block;font-family:'Space Mono',monospace;font-size:0.6rem;
@@ -272,6 +289,15 @@
             <div><label class="form-label">Full Name</label><input class="form-input" type="text" name="name" placeholder="Your name" required></div>
             <div><label class="form-label">Email Address</label><input class="form-input" type="email" name="email" placeholder="you@voiddev.com" required></div>
             <div><label class="form-label">Password</label><input class="form-input" type="password" name="password" placeholder="Min 6 characters" required minlength="6"></div>
+            <div>
+              <label class="form-label">Professional Photo</label>
+              <div class="photo-upload-area" id="photo-drop">
+                <input type="file" name="photo" accept="image/*" id="photo-input" onchange="previewPhoto(this)">
+                <span class="upload-icon">📷</span>
+                <span class="upload-text">Click to upload your photo</span>
+                <img class="photo-preview" id="photo-preview" alt="Preview">
+              </div>
+            </div>
             <button class="submit-btn" type="submit" id="reg-btn">JOIN VOID DEV</button>
           </form>
         </div>
@@ -304,11 +330,21 @@
       var d=await r.json();if(d.success){localStorage.setItem('voiddev_member',JSON.stringify(d.member));showMsg('Welcome, '+d.member.name+'!','success');setTimeout(()=>location.href='/',1500);}else{showMsg(d.error||'Invalid credentials.','error');}}
       catch(err){showMsg('Connection failed.','error');}b.disabled=false;b.textContent='ENTER THE VOID';
     }
+    function previewPhoto(input){
+      if(input.files&&input.files[0]){
+        var reader=new FileReader();
+        reader.onload=function(e){
+          var p=document.getElementById('photo-preview');
+          p.src=e.target.result;p.style.display='block';
+          document.querySelector('.upload-text').textContent='PHOTO SELECTED ✓';
+        };reader.readAsDataURL(input.files[0]);
+      }
+    }
     async function handleRegister(e){
       e.preventDefault();var b=document.getElementById('reg-btn'),fd=new FormData(e.target);
       b.disabled=true;b.innerHTML='<span class="spinner"></span>';
-      try{var r=await fetch('http://localhost:3001/api/register',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:fd.get('name'),email:fd.get('email'),password:fd.get('password')})});
-      var d=await r.json();if(d.success){localStorage.setItem('voiddev_member',JSON.stringify(d.member));showMsg('Welcome to VoidDev, '+d.member.name+'!','success');e.target.reset();setTimeout(()=>location.href='/',1500);}else{showMsg(d.error||'Registration failed.','error');}}
+      try{var r=await fetch('http://localhost:3001/api/register',{method:'POST',body:fd});
+      var d=await r.json();if(d.success){localStorage.setItem('voiddev_member',JSON.stringify(d.member));showMsg('Welcome to VoidDev, '+d.member.name+'!','success');e.target.reset();document.getElementById('photo-preview').style.display='none';document.querySelector('.upload-text').textContent='Click to upload your photo';setTimeout(()=>location.href='/',1500);}else{showMsg(d.error||'Registration failed.','error');}}
       catch(err){showMsg('Connection failed.','error');}b.disabled=false;b.textContent='JOIN VOID DEV';
     }
   </script>

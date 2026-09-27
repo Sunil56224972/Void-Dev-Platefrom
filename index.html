@@ -145,4 +145,60 @@ document.addEventListener('DOMContentLoaded', () => {
   }, 2000);
 });
 </script>
+
+<!-- TIER 2: Registered Members from API -->
+<script>
+(async function loadTier2(){
+  try{
+    const res=await fetch('http://localhost:3001/api/members');
+    const members=await res.json();
+    if(!members.length)return;
+    
+    // Find the organisers section or crew section
+    const sections=document.querySelectorAll('section');
+    let targetSection=null;
+    sections.forEach(s=>{
+      if(s.id==='organisers'||s.textContent.includes('TIER 1'))targetSection=s;
+    });
+    if(!targetSection)targetSection=sections[sections.length-2];
+    
+    // Create Tier 2 section
+    const tier2=document.createElement('section');
+    tier2.id='tier2-members';
+    tier2.style.cssText='background:#0D0B0A;border-top:6px solid #D4AF37;padding:60px 24px;';
+    tier2.innerHTML=`
+      <div style="max-width:1100px;margin:0 auto;">
+        <div style="text-align:center;margin-bottom:40px;">
+          <span style="display:inline-block;background:#111;color:#D4AF37;font-family:'Bangers',Impact,sans-serif;font-size:0.7rem;letter-spacing:0.2em;padding:6px 20px;border:2px solid #D4AF37;box-shadow:3px 3px 0 #000;margin-bottom:12px;">TIER 2 — REGISTERED MEMBERS</span>
+          <h2 style="font-family:'Bangers',Impact,sans-serif;font-size:clamp(1.8rem,4vw,2.8rem);color:#F7F2E7;letter-spacing:0.06em;line-height:1.1;">THE VOID DEV COMMUNITY.</h2>
+          <p style="color:#888;font-size:0.85rem;margin-top:8px;font-family:'Space Grotesk',sans-serif;">${members.length} member${members.length>1?'s':''} have joined the platform</p>
+        </div>
+        <div id="tier2-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:20px;"></div>
+      </div>
+    `;
+    targetSection.parentNode.insertBefore(tier2,targetSection.nextSibling);
+    
+    // Render member cards
+    const grid=document.getElementById('tier2-grid');
+    members.forEach(m=>{
+      const initials=m.name.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
+      const photoHtml=m.photo_url
+        ?`<img src="${m.photo_url}" alt="${m.name}" style="width:80px;height:80px;border-radius:50%;object-fit:cover;border:3px solid #D4AF37;box-shadow:2px 2px 0 #000;">`
+        :`<div style="width:80px;height:80px;border-radius:50%;background:#1A1513;border:3px solid #D4AF37;display:flex;align-items:center;justify-content:center;font-family:'Bangers',sans-serif;font-size:1.5rem;color:#D4AF37;box-shadow:2px 2px 0 #000;">${initials}</div>`;
+      const date=new Date(m.joined_at).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+      const card=document.createElement('div');
+      card.style.cssText='background:#1A1513;border:3px solid #2B1B17;padding:24px;text-align:center;box-shadow:4px 4px 0 #000;transition:all 0.2s;';
+      card.onmouseenter=()=>{card.style.borderColor='#D4AF37';card.style.transform='translateY(-4px)';};
+      card.onmouseleave=()=>{card.style.borderColor='#2B1B17';card.style.transform='none';};
+      card.innerHTML=`
+        <div style="display:flex;justify-content:center;margin-bottom:14px;">${photoHtml}</div>
+        <h3 style="font-family:'Bangers',Impact,sans-serif;font-size:1.15rem;color:#F7F2E7;letter-spacing:0.06em;">${m.name.toUpperCase()}</h3>
+        <span style="display:inline-block;margin-top:6px;padding:3px 12px;background:#111;border:1px solid #D4AF37;font-family:'Space Mono',monospace;font-size:0.55rem;color:#D4AF37;letter-spacing:0.1em;font-weight:700;">MEMBER</span>
+        <p style="margin-top:8px;font-family:'Space Mono',monospace;font-size:0.5rem;color:#555;letter-spacing:0.08em;">JOINED ${date.toUpperCase()}</p>
+      `;
+      grid.appendChild(card);
+    });
+  }catch(e){console.log('Tier 2 load:',e);}
+})();
+</script>
 </body></html>
