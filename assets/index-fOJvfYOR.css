@@ -1,0 +1,10 @@
+﻿html.lenis,html.lenis body{height:auto}.lenis:not(.lenis-autoToggle).lenis-stopped{overflow:clip}.lenis [data-lenis-prevent],.lenis [data-lenis-prevent-wheel],.lenis [data-lenis-prevent-touch],.lenis [data-lenis-prevent-vertical],.lenis [data-lenis-prevent-horizontal]{overscroll-behavior:contain}.lenis.lenis-smooth iframe{pointer-events:none}.lenis.lenis-autoToggle{transition-behavior:allow-discrete;transition-property:overflow;transition-duration:1ms}
+
+
+
+
+.manga-hero__brand-lockup img { mix-blend-mode: multiply !important; }
+
+.manga-logo img, .manga-hero__brand-lockup img { mix-blend-mode: multiply !important; object-fit: contain !important; }
+
+.rules-character-panel img{width:100%;height:100%;object-fit:cover;object-position:top center;min-height:500px;}

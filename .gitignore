@@ -1,0 +1,10 @@
+﻿node_modules/
+.env
+check-db.js
+*.log
+.DS_Store
+Thumbs.db
+.playwright-mcp/
+scraper.js
+remove-bg.js
+logo-render.html

@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VOID DEV — Enter the Void</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{
+      background:#F7F2E7;font-family:'Space Grotesk',sans-serif;
+      min-height:100vh;overflow-x:hidden;
+      background-image:radial-gradient(circle,rgba(0,0,0,0.06) 1px,transparent 1px);
+      background-size:12px 12px;
+    }
+    .topbar{
+      position:fixed;top:0;left:0;right:0;z-index:100;
+      background:#111;border-bottom:4px solid #D4AF37;
+      display:flex;align-items:center;justify-content:space-between;
+      padding:0 24px;height:52px;
+    }
+    .topbar-brand{font-family:'Bangers',Impact,sans-serif;font-size:1.4rem;letter-spacing:0.08em;color:#D4AF37;text-decoration:none;}
+    .topbar-links{display:flex;gap:4px;}
+    .topbar-link{
+      font-family:'Space Mono',monospace;font-size:0.6rem;font-weight:700;
+      letter-spacing:0.12em;text-transform:uppercase;color:#999;
+      text-decoration:none;padding:6px 12px;border:2px solid transparent;transition:all 0.2s;
+    }
+    .topbar-link:hover{color:#D4AF37;}
+    .topbar-link.active{color:#D4AF37;border-color:#D4AF37;background:rgba(212,175,55,0.1);}
+
+    .login-page{
+      display:grid;grid-template-columns:1fr 1fr;
+      min-height:100vh;padding-top:52px;
+    }
+    @media(max-width:900px){
+      .login-page{grid-template-columns:1fr;}
+    }
+
+    /* LEFT PANEL */
+    .art-panel{
+      position:relative;overflow:hidden;background:#F7F2E7;
+      display:flex;align-items:flex-end;justify-content:center;
+    }
+    .sentry-character{
+      height:90%;width:auto;max-width:90%;
+      object-fit:contain;object-position:bottom;
+      animation:sentryIdle 4s ease-in-out infinite alternate;
+      filter:drop-shadow(0 5px 15px rgba(0,0,0,0.15));
+      position:relative;z-index:2;
+    }
+    @keyframes sentryIdle{
+      0%{transform:translateY(0);}
+      100%{transform:translateY(-10px);}
+    }
+    .art-label{
+      position:absolute;bottom:28px;left:28px;z-index:5;
+      font-family:'Bangers',Impact,sans-serif;font-size:2.2rem;
+      letter-spacing:0.06em;color:#111;line-height:1;
+      text-shadow:2px 2px 0 rgba(212,175,55,0.3);
+    }
+    .art-label small{
+      display:block;font-family:'Space Mono',monospace;font-size:0.55rem;
+      letter-spacing:0.2em;color:#C53030;text-transform:uppercase;margin-top:6px;
+    }
+
+    /* SMASHING — flies from bottom-left to center */
+    .smashing-flyer{
+      position:fixed;z-index:50;pointer-events:none;
+      bottom:15%;left:35%;width:320px;
+      will-change:transform,opacity;
+      transform:translate(-600px,600px) rotate(-15deg) scale(0.4);
+      opacity:0;
+      animation:smashFly 4.5s 0.3s cubic-bezier(0.25,0.46,0.45,0.94) forwards;
+    }
+    .smashing-flyer img{
+      width:100%;height:auto;object-fit:contain;
+      filter:drop-shadow(0 10px 30px rgba(0,0,0,0.4));
+      will-change:transform;
+      animation:smashHover 4s 4.8s ease-in-out infinite alternate;
+    }
+    @keyframes smashFly{
+      0%{transform:translate(-600px,600px) rotate(-15deg) scale(0.4);opacity:0;}
+      20%{transform:translate(-350px,350px) rotate(-10deg) scale(0.6);opacity:0.8;}
+      50%{transform:translate(-120px,120px) rotate(-4deg) scale(0.85);opacity:1;}
+      75%{transform:translate(-20px,20px) rotate(1deg) scale(1.02);}
+      100%{transform:translate(0,0) rotate(0deg) scale(1);opacity:1;}
+    }
+    @keyframes smashHover{
+      0%{transform:translateY(0) rotate(0deg);}
+      50%{transform:translateY(-8px) rotate(0.5deg);}
+      100%{transform:translateY(-14px) rotate(-0.5deg);}
+    }
+
+    /* THOUGHT BUBBLE — from smashing character's head */
+    .thought-bubble{
+      position:fixed;z-index:51;pointer-events:none;
+      bottom:calc(15% + 460px);left:calc(35% + 10px);
+      opacity:0;
+      animation:bubbleAppear 0.8s 4s cubic-bezier(0.16,1,0.3,1) forwards;
+    }
+    .thought-text{
+      font-family:'Bangers',Impact,sans-serif;
+      font-size:1rem;letter-spacing:0.04em;
+      color:#111;background:#F7F2E7;
+      padding:12px 20px;
+      border:2.5px solid #111;border-radius:28px;
+      white-space:nowrap;position:relative;
+    }
+    /* Trailing dots from bubble down to smashing head */
+    .thought-dot{
+      position:absolute;background:#F7F2E7;
+      border:2.5px solid #111;border-radius:50%;
+    }
+    .thought-dot-1{width:16px;height:16px;bottom:-24px;right:30px;left:auto;}
+    .thought-dot-2{width:11px;height:11px;bottom:-40px;right:20px;left:auto;}
+    .thought-dot-3{width:7px;height:7px;bottom:-52px;right:14px;left:auto;}
+
+    @keyframes bubbleAppear{
+      0%{opacity:0;transform:scale(0.5) translateY(20px);}
+      100%{opacity:1;transform:scale(1) translateY(0);}
+    }
+
+    /* Golden trail behind smashing */
+    .smash-trail{
+      position:fixed;z-index:49;pointer-events:none;
+      bottom:17%;left:38%;width:200px;height:200px;
+      background:radial-gradient(circle,rgba(212,175,55,0.12),transparent 70%);
+      border-radius:50%;filter:blur(20px);
+      will-change:transform,opacity;
+      transform:translate(-600px,600px);
+      opacity:0;
+      animation:trailFly 4.5s 0.3s cubic-bezier(0.25,0.46,0.45,0.94) forwards;
+    }
+    @keyframes trailFly{
+      0%{transform:translate(-600px,600px);opacity:0;}
+      30%{opacity:0.6;}
+      100%{transform:translate(0,0);opacity:0.3;}
+    }
+
+    /* RIGHT PANEL — FORM */
+    .form-panel{
+      display:flex;align-items:center;justify-content:center;
+      padding:60px 32px;position:relative;overflow:visible;
+    }
+    .form-wrapper{width:100%;max-width:420px;position:relative;z-index:1;}
+    .chapter-badge{
+      display:inline-block;background:#111;color:#D4AF37;
+      font-family:'Space Mono',monospace;font-size:0.65rem;font-weight:900;
+      letter-spacing:0.2em;text-transform:uppercase;
+      padding:5px 16px;border:2px solid #D4AF37;box-shadow:2px 2px 0 #000;
+    }
+    .section-title{
+      font-family:'Bangers',Impact,sans-serif;font-size:clamp(2rem,5vw,3rem);
+      color:#111;letter-spacing:0.04em;line-height:1;margin-top:12px;
+    }
+    .red-accent{width:60px;height:4px;background:#C53030;margin:12px 0 0;box-shadow:1px 1px 0 #000;}
+    .section-desc{font-size:0.85rem;color:#555;margin-top:8px;line-height:1.5;}
+    .auth-tabs{
+      display:flex;margin:28px 0 24px;border:3px solid #111;box-shadow:3px 3px 0 #000;
+    }
+    .auth-tab{
+      flex:1;padding:14px;font-family:'Bangers',Impact,sans-serif;
+      font-size:1rem;letter-spacing:0.1em;text-transform:uppercase;
+      text-align:center;cursor:pointer;border:none;outline:none;
+      background:#F7F2E7;color:#999;transition:all 0.2s;
+    }
+    .auth-tab:first-child{border-right:3px solid #111;}
+    .auth-tab.active{background:#D4AF37;color:#111;}
+    .auth-tab:hover:not(.active){background:#EDE5D2;color:#111;}
+    .form-card{background:#fff;border:3px solid #111;box-shadow:4px 4px 0 #000;padding:28px;}
+    .auth-form{display:flex;flex-direction:column;gap:18px;}
+    .auth-form.hidden{display:none;}
+    .form-label{
+      display:block;font-family:'Space Mono',monospace;font-size:0.6rem;
+      font-weight:700;letter-spacing:0.18em;text-transform:uppercase;
+      color:#C53030;margin-bottom:6px;
+    }
+    .form-input{
+      width:100%;padding:14px 16px;background:#F7F2E7;border:3px solid #111;
+      color:#111;font-family:'Space Grotesk',sans-serif;font-size:0.95rem;
+      outline:none;transition:all 0.2s;
+    }
+    .form-input::placeholder{color:#aaa;}
+    .form-input:focus{border-color:#D4AF37;box-shadow:2px 2px 0 #D4AF37;}
+    .submit-btn{
+      width:100%;padding:16px;margin-top:4px;
+      font-family:'Bangers',Impact,sans-serif;font-size:1.5rem;
+      letter-spacing:0.1em;text-transform:uppercase;
+      background:#D4AF37;color:#111;border:3px solid #111;
+      cursor:pointer;box-shadow:4px 4px 0 #000;transition:all 0.15s;
+    }
+    .submit-btn:hover{background:#E5C158;box-shadow:5px 5px 0 #000;transform:translateY(-2px);}
+    .submit-btn:active{transform:translateY(2px);box-shadow:1px 1px 0 #000;}
+    .submit-btn:disabled{opacity:0.5;cursor:not-allowed;transform:none;}
+    .spinner{
+      display:inline-block;width:22px;height:22px;
+      border:3px solid rgba(17,17,17,0.2);border-top-color:#111;
+      border-radius:50%;animation:spin 0.5s linear infinite;vertical-align:middle;
+    }
+    @keyframes spin{to{transform:rotate(360deg);}}
+    .form-msg{
+      padding:12px 16px;font-family:'Space Mono',monospace;font-size:0.72rem;
+      font-weight:700;border:3px solid;box-shadow:2px 2px 0 #000;
+      display:none;margin-bottom:12px;
+    }
+    .form-msg.success{background:#E8FFE8;color:#166534;border-color:#111;}
+    .form-msg.error{background:#FFE8E8;color:#C53030;border-color:#111;}
+    .form-tagline{
+      margin-top:20px;text-align:center;font-family:'Space Mono',monospace;
+      font-size:0.65rem;color:#888;letter-spacing:0.08em;
+    }
+    .form-tagline strong{color:#C53030;}
+    .bottom-strip{
+      position:fixed;bottom:0;left:0;right:0;background:#111;
+      border-top:3px solid #D4AF37;padding:8px 24px;
+      display:flex;align-items:center;justify-content:space-between;
+      font-family:'Space Mono',monospace;font-size:0.55rem;
+      letter-spacing:0.12em;color:#666;text-transform:uppercase;z-index:100;
+    }
+    .bottom-strip a{color:#D4AF37;text-decoration:none;}
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <a href="/" class="topbar-brand">VOID DEV</a>
+    <div class="topbar-links">
+      <a href="/" class="topbar-link">HOME</a>
+      <a href="/login.html" class="topbar-link active">LOGIN</a>
+    </div>
+  </div>
+
+  <!-- Smashing flying from bottom-left -->
+  <div class="smash-trail"></div>
+  <div class="smashing-flyer"><img src="/assets/smashing.png" alt=""></div>
+
+  <!-- Thought bubble from smashing's head -->
+  <div class="thought-bubble">
+    <div class="thought-text">
+      REGISTER AT VOIDDEV PLATFORM TO JOIN THE TEAM!
+      <div class="thought-dot thought-dot-1"></div>
+      <div class="thought-dot thought-dot-2"></div>
+      <div class="thought-dot thought-dot-3"></div>
+    </div>
+  </div>
+
+  <div class="login-page">
+    <!-- LEFT panel -->
+    <div class="art-panel">
+      <img src="/assets/body-sentry.png" alt="" style="width:100%;height:100%;object-fit:cover;object-position:-50px center;display:block;">
+    </div>
+
+    <!-- RIGHT — Login form -->
+    <div class="form-panel">
+      <div class="form-wrapper">
+        <div class="chapter-badge">CH.00 ACCESS GATE</div>
+        <h1 class="section-title">AUTHENTICATE.</h1>
+        <div class="red-accent"></div>
+        <p class="section-desc">Enter your credentials to access the VoidDev platform.</p>
+        <div class="auth-tabs">
+          <button class="auth-tab active" onclick="switchTab('login')">LOGIN</button>
+          <button class="auth-tab" onclick="switchTab('register')">REGISTER</button>
+        </div>
+        <div class="form-card">
+          <div class="form-msg" id="msg"></div>
+          <form class="auth-form" id="login-form" onsubmit="handleLogin(event)">
+            <div><label class="form-label">Email Address</label><input class="form-input" type="email" name="email" placeholder="you@voiddev.com" required></div>
+            <div><label class="form-label">Password</label><input class="form-input" type="password" name="password" placeholder="Enter password" required minlength="6"></div>
+            <button class="submit-btn" type="submit" id="login-btn">ENTER THE VOID</button>
+          </form>
+          <form class="auth-form hidden" id="register-form" onsubmit="handleRegister(event)">
+            <div><label class="form-label">Full Name</label><input class="form-input" type="text" name="name" placeholder="Your name" required></div>
+            <div><label class="form-label">Email Address</label><input class="form-input" type="email" name="email" placeholder="you@voiddev.com" required></div>
+            <div><label class="form-label">Password</label><input class="form-input" type="password" name="password" placeholder="Min 6 characters" required minlength="6"></div>
+            <button class="submit-btn" type="submit" id="reg-btn">JOIN VOID DEV</button>
+          </form>
+        </div>
+        <p class="form-tagline">Powered by <strong>VOID DEV</strong> · Est. 2026</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="bottom-strip"><span>© 2026 VOID DEV</span><a href="/">← BACK TO PLATFORM</a></div>
+
+  <script>
+    function switchTab(t){
+      document.querySelectorAll('.auth-tab').forEach(b=>b.classList.remove('active'));
+      document.getElementById('msg').style.display='none';
+      if(t==='login'){
+        document.querySelectorAll('.auth-tab')[0].classList.add('active');
+        document.getElementById('login-form').classList.remove('hidden');
+        document.getElementById('register-form').classList.add('hidden');
+      }else{
+        document.querySelectorAll('.auth-tab')[1].classList.add('active');
+        document.getElementById('login-form').classList.add('hidden');
+        document.getElementById('register-form').classList.remove('hidden');
+      }
+    }
+    function showMsg(t,c){var m=document.getElementById('msg');m.textContent=t;m.className='form-msg '+c;m.style.display='block';}
+    async function handleLogin(e){
+      e.preventDefault();var b=document.getElementById('login-btn'),fd=new FormData(e.target);
+      b.disabled=true;b.innerHTML='<span class="spinner"></span>';
+      try{var r=await fetch('http://localhost:3001/api/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:fd.get('email'),password:fd.get('password')})});
+      var d=await r.json();if(d.success){showMsg('Welcome, '+d.member.name+'!','success');setTimeout(()=>location.href='/',1500);}else{showMsg(d.error||'Invalid credentials.','error');}}
+      catch(err){showMsg('Connection failed.','error');}b.disabled=false;b.textContent='ENTER THE VOID';
+    }
+    async function handleRegister(e){
+      e.preventDefault();var b=document.getElementById('reg-btn'),fd=new FormData(e.target);
+      b.disabled=true;b.innerHTML='<span class="spinner"></span>';
+      try{var r=await fetch('http://localhost:3001/api/register',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:fd.get('name'),email:fd.get('email'),password:fd.get('password')})});
+      var d=await r.json();if(d.success){showMsg('Welcome to VoidDev, '+d.member.name+'!','success');e.target.reset();setTimeout(()=>location.href='/',1500);}else{showMsg(d.error||'Registration failed.','error');}}
+      catch(err){showMsg('Connection failed.','error');}b.disabled=false;b.textContent='JOIN VOID DEV';
+    }
+  </script>
+</body>
+</html>
