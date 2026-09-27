@@ -242,7 +242,9 @@
       .form-panel{padding:40px 20px 80px;}
       .topbar{padding:0 16px;height:48px;}
       .topbar-brand{font-size:1.2rem;}
-      .smashing-flyer,.smash-trail,.thought-bubble{display:none;}
+      .smashing-flyer{width:60px;top:5%;right:5%;opacity:0.5;}
+      .smash-trail{display:none;}
+      .thought-bubble{font-size:0.55rem;padding:6px 10px;top:2%;right:18%;max-width:140px;}
     }
     @media(max-width:600px){
       .form-panel{padding:24px 16px 80px;}
@@ -356,7 +358,7 @@
     async function handleLogin(e){
       e.preventDefault();var b=document.getElementById('login-btn'),fd=new FormData(e.target);
       b.disabled=true;b.innerHTML='<span class="spinner"></span>';
-      try{var r=await fetch('http://localhost:3001/api/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:fd.get('email'),password:fd.get('password')})});
+      try{var r=await fetch('/api/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:fd.get('email'),password:fd.get('password')})});
       var d=await r.json();if(d.success){localStorage.setItem('voiddev_member',JSON.stringify(d.member));showMsg('Welcome, '+d.member.name+'!','success');setTimeout(()=>location.href='/',1500);}else{showMsg(d.error||'Invalid credentials.','error');}}
       catch(err){showMsg('Connection failed.','error');}b.disabled=false;b.textContent='ENTER THE VOID';
     }
@@ -373,7 +375,7 @@
     async function handleRegister(e){
       e.preventDefault();var b=document.getElementById('reg-btn'),fd=new FormData(e.target);
       b.disabled=true;b.innerHTML='<span class="spinner"></span>';
-      try{var r=await fetch('http://localhost:3001/api/register',{method:'POST',body:fd});
+      try{var r=await fetch('/api/register',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:fd.get('name'),email:fd.get('email'),password:fd.get('password')})});
       var d=await r.json();if(d.success){localStorage.setItem('voiddev_member',JSON.stringify(d.member));showMsg('Welcome to VoidDev, '+d.member.name+'!','success');e.target.reset();document.getElementById('photo-preview').style.display='none';document.querySelector('.upload-text').textContent='Upload photo';setTimeout(()=>location.href='/',1500);}else{showMsg(d.error||'Registration failed.','error');}}
       catch(err){showMsg('Connection failed.','error');}b.disabled=false;b.textContent='JOIN VOID DEV';
     }

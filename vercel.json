@@ -1,0 +1,7 @@
+{
+  "rewrites": [
+    { "source": "/api/register", "destination": "/api/register" },
+    { "source": "/api/login", "destination": "/api/login" },
+    { "source": "/api/members", "destination": "/api/members" }
+  ]
+}

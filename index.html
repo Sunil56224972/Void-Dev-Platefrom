@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const fd = new FormData(e.target);
         const msg = document.getElementById('reg-msg');
         try {
-          const res = await fetch('http://localhost:3001/api/register', {
+          const res = await fetch('/api/register', {
             method: 'POST',
             headers: {'Content-Type':'application/json'},
             body: JSON.stringify({name:fd.get('name'),email:fd.get('email'),password:fd.get('password')})
@@ -89,7 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
       `;
       window.loadMembers = async () => {
         try {
-          const res = await fetch('http://localhost:3001/api/members');
+          const res = await fetch('/api/members');
           const members = await res.json();
           const grid = document.getElementById('members-grid');
           const empty = document.getElementById('members-empty');
@@ -150,7 +150,7 @@ document.addEventListener('DOMContentLoaded', () => {
 <script>
 (async function loadTier2(){
   try{
-    const res=await fetch('http://localhost:3001/api/members');
+    const res=await fetch('/api/members');
     const members=await res.json();
     if(!members.length)return;
     
