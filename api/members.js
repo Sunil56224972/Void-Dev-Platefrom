@@ -2,6 +2,8 @@ const { DynamoDBClient, ScanCommand } = require("@aws-sdk/client-dynamodb");
 const client = new DynamoDBClient({ region: "ap-south-1", credentials: { accessKeyId: process.env.AWS_ACCESS_KEY_ID, secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY } });
 module.exports = async (req, res) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0");
+  res.setHeader("Pragma", "no-cache");
   if (req.method !== "GET") return res.status(405).json({ error: "Method not allowed" });
   try {
     const result = await client.send(new ScanCommand({ TableName: "voiddev_members" }));

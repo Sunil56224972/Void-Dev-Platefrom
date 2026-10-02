@@ -89,7 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
       `;
       window.loadMembers = async () => {
         try {
-          const res = await fetch('/api/members');
+          const res = await fetch('/api/members',{cache:'no-store'});
           const members = await res.json();
           const grid = document.getElementById('members-grid');
           const empty = document.getElementById('members-empty');
@@ -150,7 +150,7 @@ document.addEventListener('DOMContentLoaded', () => {
 <script>
 (async function loadTier2(){
   try{
-    const res=await fetch('/api/members');
+    const res=await fetch('/api/members',{cache:'no-store'});
     const members=await res.json();
     if(!members.length)return;
     
