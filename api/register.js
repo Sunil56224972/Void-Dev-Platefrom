@@ -1,6 +1,6 @@
 const { DynamoDBClient, PutItemCommand, GetItemCommand } = require("@aws-sdk/client-dynamodb");
 const bcrypt = require("bcryptjs");
-const client = new DynamoDBClient({ region: "ap-south-1", credentials: { accessKeyId: process.env.AWS_ACCESS_KEY_ID, secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY } });
+
 module.exports = async (req, res) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
@@ -8,6 +8,10 @@ module.exports = async (req, res) => {
   if (req.method === "OPTIONS") return res.status(200).end();
   if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed" });
   try {
+    const akid = process.env.AWS_ACCESS_KEY_ID;
+    const sak = process.env.AWS_SECRET_ACCESS_KEY;
+    if (!akid || !sak) return res.status(500).json({ error: "AWS credentials not configured", hasKey: !!akid, hasSecret: !!sak });
+    const client = new DynamoDBClient({ region: "ap-south-1", credentials: { accessKeyId: akid, secretAccessKey: sak } });
     const { name, email, password } = req.body;
     if (!name || !email || !password) return res.status(400).json({ error: "Name, email, and password are required" });
     const existing = await client.send(new GetItemCommand({ TableName: "voiddev_members", Key: { email: { S: email } } }));
@@ -16,5 +20,5 @@ module.exports = async (req, res) => {
     const joinedAt = new Date().toISOString();
     await client.send(new PutItemCommand({ TableName: "voiddev_members", Item: { email: { S: email }, name: { S: name }, password_hash: { S: hash }, photo_url: { S: "" }, joined_at: { S: joinedAt } } }));
     res.json({ success: true, member: { name, email, photo_url: "", joined_at: joinedAt } });
-  } catch (err) { console.error(err); res.status(500).json({ error: "Registration failed" }); }
+  } catch (err) { console.error(err); res.status(500).json({ error: "Registration failed", detail: err.message }); }
 };
