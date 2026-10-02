@@ -8,9 +8,9 @@ module.exports = async (req, res) => {
   if (req.method === "OPTIONS") return res.status(200).end();
   if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed" });
   try {
-    const akid = process.env.AWS_ACCESS_KEY_ID;
-    const sak = process.env.AWS_SECRET_ACCESS_KEY;
-    if (!akid || !sak) return res.status(500).json({ error: "AWS credentials not configured", hasKey: !!akid, hasSecret: !!sak });
+    const akid = (process.env.AWS_ACCESS_KEY_ID || "").trim();
+    const sak = (process.env.AWS_SECRET_ACCESS_KEY || "").trim();
+    if (!akid || !sak) return res.status(500).json({ error: "AWS credentials not configured" });
     const client = new DynamoDBClient({ region: "ap-south-1", credentials: { accessKeyId: akid, secretAccessKey: sak } });
     const { name, email, password } = req.body;
     if (!name || !email || !password) return res.status(400).json({ error: "Name, email, and password are required" });
