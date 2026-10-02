@@ -1,7 +1,1 @@
-{
-  "rewrites": [
-    { "source": "/api/register", "destination": "/api/register" },
-    { "source": "/api/login", "destination": "/api/login" },
-    { "source": "/api/members", "destination": "/api/members" }
-  ]
-}
+{"rewrites":[{"source":"/api/register","destination":"/api/register"},{"source":"/api/login","destination":"/api/login"},{"source":"/api/members","destination":"/api/members"},{"source":"/((?!api|assets|favicon|login).*)", "destination":"/index.html"}]}
