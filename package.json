@@ -1,1 +1,1 @@
-{"private":true,"dependencies":{"@aws-sdk/client-dynamodb":"^3.600.0","bcryptjs":"^2.4.3"}}
+{"private":true,"dependencies":{"@aws-sdk/client-dynamodb":"^3.600.0","bcryptjs":"^2.4.3"},"devDependencies":{"sharp":"^0.35.5"}}
