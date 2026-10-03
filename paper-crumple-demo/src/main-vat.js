@@ -40,8 +40,8 @@ function applyCameraSettings() {
   updateOpenPose();
 }
 
-const renderer = new THREE.WebGLRenderer({ antialias: true });
-renderer.setPixelRatio(window.devicePixelRatio);
+const renderer = new THREE.WebGLRenderer({ antialias: false, powerPreference: 'high-performance' });
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.outputColorSpace = THREE.SRGBColorSpace;
 renderer.shadowMap.enabled = true;
@@ -74,7 +74,7 @@ scene.add(ambient);
 const dirLight = new THREE.DirectionalLight(0xffffff, 1.15);
 dirLight.position.set(-2, 2.6, 1.4);
 dirLight.castShadow = true;
-dirLight.shadow.mapSize.set(2048, 2048);
+dirLight.shadow.mapSize.set(1024, 1024);
 dirLight.shadow.camera.left = -4;
 dirLight.shadow.camera.right = 4;
 dirLight.shadow.camera.top = 4;
@@ -103,7 +103,8 @@ ssaoPass.minDistance = 0.0001;
 ssaoPass.maxDistance = 0.08;
 // ÃƒÂ¦Ã‚Â³Ã‚Â¨ÃƒÂ¦Ã¢â‚¬Å¾Ã‚Â: SSAOPass ÃƒÂ£Ã‚ÂÃ‚Â« intensity ÃƒÂ£Ã†â€™Ã¢â‚¬â€ÃƒÂ£Ã†â€™Ã‚Â­ÃƒÂ£Ã†â€™Ã¢â‚¬ËœÃƒÂ£Ã†â€™Ã¢â‚¬Â ÃƒÂ£Ã¢â‚¬Å¡Ã‚Â£ÃƒÂ£Ã‚ÂÃ‚Â¯ÃƒÂ§Ã¢â‚¬Å¾Ã‚Â¡ÃƒÂ£Ã‚ÂÃ¢â‚¬Å¾ (ÃƒÂ¨Ã‚Â¨Ã‚Â­ÃƒÂ¥Ã‚Â®Ã…Â¡ÃƒÂ£Ã‚ÂÃ¢â‚¬â€ÃƒÂ£Ã‚ÂÃ‚Â¦ÃƒÂ£Ã¢â‚¬Å¡Ã¢â‚¬Å¡ no-op)ÃƒÂ£Ã¢â€šÂ¬Ã¢â‚¬Å¡
 // ÃƒÂ£Ã¢â‚¬Å¡Ã‚ÂªÃƒÂ£Ã†â€™Ã‚Â³/ÃƒÂ£Ã¢â‚¬Å¡Ã‚ÂªÃƒÂ£Ã†â€™Ã¢â‚¬Â¢ÃƒÂ£Ã‚ÂÃ‚Â¯ ssaoPass.enabledÃƒÂ£Ã¢â€šÂ¬Ã‚ÂÃƒÂ¥Ã‚Â¼Ã‚Â·ÃƒÂ£Ã‚ÂÃ¢â‚¬Â¢ÃƒÂ£Ã‚ÂÃ‚Â®ÃƒÂ¨Ã‚ÂªÃ‚Â¿ÃƒÂ¦Ã¢â‚¬Â¢Ã‚Â´ÃƒÂ£Ã‚ÂÃ‚Â¯ kernelRadius / maxDistance ÃƒÂ£Ã‚ÂÃ‚Â§ÃƒÂ¨Ã‚Â¡Ã…â€™ÃƒÂ£Ã‚ÂÃ¢â‚¬Â ÃƒÂ£Ã¢â€šÂ¬Ã¢â‚¬Å¡
-composer.addPass(ssaoPass);
+// SSAO disabled for performance
+// composer.addPass(ssaoPass);
 
 composer.addPass(new OutputPass());
 
@@ -1008,7 +1009,7 @@ function tick() {
 
   if (!animData) return;
 
-  physicsWorld.step(PHYSICS_STEP, Math.min(dt, 0.05), 3);
+  physicsWorld.step(PHYSICS_STEP, Math.min(dt, 0.05), 1);
   applyPhysicsBounds(dt);
 
   for (const p of papers) {
