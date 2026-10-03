@@ -44,7 +44,7 @@ const renderer = new THREE.WebGLRenderer({ antialias: false, powerPreference: 'h
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.outputColorSpace = THREE.SRGBColorSpace;
-renderer.shadowMap.enabled = true;
+renderer.shadowMap.enabled = false;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 app.appendChild(renderer.domElement);
 
@@ -73,7 +73,7 @@ scene.add(ambient);
 
 const dirLight = new THREE.DirectionalLight(0xffffff, 1.15);
 dirLight.position.set(-2, 2.6, 1.4);
-dirLight.castShadow = true;
+dirLight.castShadow = false;
 dirLight.shadow.mapSize.set(1024, 1024);
 dirLight.shadow.camera.left = -4;
 dirLight.shadow.camera.right = 4;
@@ -120,7 +120,7 @@ const animSettings = { speed: 1.5, openFrame: 4 };
 const paperSettings = {
   count: Math.min(
     MAX_PAPERS,
-    Math.max(1, parseInt(urlParams.get("papers"), 10) || 20),
+    Math.max(1, parseInt(urlParams.get("papers"), 10) || 14),
   ),
 };
 // GUI ÃƒÂ£Ã‚ÂÃ‚Â¯ ?gui=on ÃƒÂ£Ã¢â‚¬Å¡Ã¢â‚¬â„¢ÃƒÂ¤Ã‚Â»Ã‹Å“ÃƒÂ£Ã‚ÂÃ¢â‚¬ËœÃƒÂ£Ã‚ÂÃ…Â¸ÃƒÂ¦Ã¢â€žÂ¢Ã¢â‚¬Å¡ÃƒÂ£Ã‚ÂÃ‚Â ÃƒÂ£Ã‚ÂÃ¢â‚¬ËœÃƒÂ¨Ã‚Â¡Ã‚Â¨ÃƒÂ§Ã‚Â¤Ã‚ÂºÃƒÂ£Ã‚ÂÃ¢â€žÂ¢ÃƒÂ£Ã¢â‚¬Å¡Ã¢â‚¬Â¹
@@ -296,7 +296,7 @@ const DISCARD_DURATION = 1.25;
 const ROLL_LINEAR_RESISTANCE = 2.6;
 const ROLL_ANGULAR_RESISTANCE = 4.5;
 const ROLL_SETTLE_SPEED = 0.018;
-const PHYSICS_STEP = 1 / 60;
+const PHYSICS_STEP = 1 / 30;
 const PAPER_MASS = 0.16;
 
 // ÃƒÂ¦Ã…Â½Ã‚Â´ÃƒÂ£Ã¢â‚¬Å¡Ã¢â‚¬Å“ÃƒÂ£Ã‚ÂÃ‚Â§ÃƒÂ¦Ã…Â Ã¢â‚¬Â¢ÃƒÂ£Ã‚ÂÃ¢â‚¬â„¢ÃƒÂ£Ã¢â‚¬Å¡Ã¢â‚¬Â¹ÃƒÂ¦Ã¢â‚¬Å“Ã‚ÂÃƒÂ¤Ã‚Â½Ã…â€œ
@@ -1027,7 +1027,7 @@ function tick() {
     }
   }
 
-  composer.render();
+  renderer.render(scene, camera);
 }
 
 function updatePaperMotion(paper, dt) {
