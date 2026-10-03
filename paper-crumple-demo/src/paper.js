@@ -114,7 +114,7 @@ const TEX_W = 512;
 const TEX_H = 700;
 // è‹±æ•°å­—ã¯ Caveatã€æ—¥æœ¬èªžã¯æ‰‹æ›¸ãé¢¨ã® Yomogi ã«ãƒ•ã‚©ãƒ¼ãƒ«ãƒãƒƒã‚¯ã™ã‚‹
 const HAND_FONT = '"Caveat", "Yomogi", "Comic Sans MS", cursive';
-const INK_COLOR = "#D4AF37";
+const INK_COLOR = "#FFFFFF";
 // ã‚µãƒ ãƒã‚¤ãƒ«ã¯ 16:9
 const IMAGE_RECT = {
   x: Math.round(TEX_W * 0.11),
@@ -130,15 +130,15 @@ function drawStaticLayer(ctx, design) {
   // æ–¹çœ¼ç´™ã®ä¸‹åœ°
   // Unique paper colors per track for visibility
   const PAPER_COLORS = [
-    "#1a1a2e", "#16213e", "#0f3460", "#1b1b2f", "#162447",
-    "#1f1f38", "#1a1a40", "#0d1b2a", "#1b2838", "#1c2333",
-    "#2d132c", "#1a1a2e", "#0b2545", "#13293d", "#1b1b2f",
-    "#1c1c3c", "#0d1b2a", "#162447", "#1a1a40", "#13293d"
+    "#E74C3C", "#3498DB", "#2ECC71", "#F39C12", "#9B59B6",
+    "#1ABC9C", "#E67E22", "#E91E63", "#00BCD4", "#8BC34A",
+    "#FF5722", "#673AB7", "#009688", "#FFC107", "#3F51B5",
+    "#FF9800", "#4CAF50", "#F44336", "#2196F3", "#CDDC39"
   ];
   const paperBg = PAPER_COLORS[PAPER_DESIGNS.indexOf(design) % PAPER_COLORS.length] || "#1a1a2e";
   ctx.fillStyle = paperBg;
   ctx.fillRect(0, 0, TEX_W, TEX_H);
-  ctx.strokeStyle = "rgba(212, 175, 55, 0.15)";
+  ctx.strokeStyle = "rgba(255, 255, 255, 0.2)";
   ctx.lineWidth = 2;
   const cell = 64;
   ctx.beginPath();
@@ -165,12 +165,12 @@ function drawStaticLayer(ctx, design) {
     const x = TEX_W * 0.13;
     
     // "REQUIRED SKILLS" header
-    ctx.fillStyle = "#E8C547";
+    ctx.fillStyle = "#FFD700";
     ctx.font = `bold 44px ${HAND_FONT}`;
     ctx.fillText("REQUIRED SKILLS:", x, startY);
     
     // Underline
-    ctx.strokeStyle = "#E8C547";
+    ctx.strokeStyle = "#FFD700";
     ctx.lineWidth = 2;
     ctx.beginPath();
     ctx.moveTo(x, startY + 10);
@@ -185,7 +185,7 @@ function drawStaticLayer(ctx, design) {
     });
     
     // Badge at bottom
-    ctx.fillStyle = "#E8C547";
+    ctx.fillStyle = "#FFD700";
     ctx.font = `bold 34px ${HAND_FONT}`;
     ctx.fillText("VOIDDEV HACKATHON SQUAD", x, startY + 85 + design.skills.length * lineH);
   } else {
