@@ -41,7 +41,7 @@ function applyCameraSettings() {
 }
 
 const renderer = new THREE.WebGLRenderer({ antialias: false, powerPreference: 'high-performance' });
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+renderer.setPixelRatio(1);
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.outputColorSpace = THREE.SRGBColorSpace;
 renderer.shadowMap.enabled = false;
@@ -120,7 +120,7 @@ const animSettings = { speed: 1.5, openFrame: 4 };
 const paperSettings = {
   count: Math.min(
     MAX_PAPERS,
-    Math.max(1, parseInt(urlParams.get("papers"), 10) || 14),
+    Math.max(1, parseInt(urlParams.get("papers"), 10) || 10),
   ),
 };
 // GUI ÃƒÂ£Ã‚ÂÃ‚Â¯ ?gui=on ÃƒÂ£Ã¢â‚¬Å¡Ã¢â‚¬â„¢ÃƒÂ¤Ã‚Â»Ã‹Å“ÃƒÂ£Ã‚ÂÃ¢â‚¬ËœÃƒÂ£Ã‚ÂÃ…Â¸ÃƒÂ¦Ã¢â€žÂ¢Ã¢â‚¬Å¡ÃƒÂ£Ã‚ÂÃ‚Â ÃƒÂ£Ã‚ÂÃ¢â‚¬ËœÃƒÂ¨Ã‚Â¡Ã‚Â¨ÃƒÂ§Ã‚Â¤Ã‚ÂºÃƒÂ£Ã‚ÂÃ¢â€žÂ¢ÃƒÂ£Ã¢â‚¬Å¡Ã¢â‚¬Â¹
@@ -316,9 +316,11 @@ const crumpleCenter = new THREE.Vector3(0, 0.2, 0);
 // ÃƒÂ§Ã‚Â°Ã‚Â¡ÃƒÂ¦Ã‹Å“Ã¢â‚¬Å“ÃƒÂ§Ã¢â‚¬Â°Ã‚Â©ÃƒÂ§Ã‚ÂÃ¢â‚¬Â  ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â ÃƒÂ¤Ã‚Â¸Ã‚Â¸ÃƒÂ£Ã‚ÂÃ‚Â¾ÃƒÂ£Ã‚ÂÃ‚Â£ÃƒÂ£Ã‚ÂÃ…Â¸ÃƒÂ§Ã‚Â´Ã¢â€žÂ¢ÃƒÂ£Ã‚ÂÃ‚Â ÃƒÂ£Ã‚ÂÃ¢â‚¬ËœÃƒÂ§Ã‚ÂÃ†â€™ÃƒÂ¤Ã‚Â½Ã¢â‚¬Å“ÃƒÂ¥Ã¢â‚¬Â°Ã¢â‚¬ÂºÃƒÂ¤Ã‚Â½Ã¢â‚¬Å“ÃƒÂ£Ã‚ÂÃ‚Â¨ÃƒÂ£Ã‚ÂÃ¢â‚¬â€ÃƒÂ£Ã‚ÂÃ‚Â¦ÃƒÂ¦Ã¢â‚¬Â°Ã‚Â±ÃƒÂ£Ã‚ÂÃ¢â‚¬Â 
 // ==================================================
 const physicsWorld = new CANNON.World({
-  gravity: new CANNON.Vec3(0, -7.0, 0),
+  broadphase: new CANNON.NaiveBroadphase(),
+  gravity: new CANNON.Vec3(0, -5.0, 0),
 });
-physicsWorld.allowSleep = false;
+physicsWorld.allowSleep = true;
+physicsWorld.solver.iterations = 3;
 physicsWorld.defaultContactMaterial.friction = 0.8;
 physicsWorld.defaultContactMaterial.restitution = 0.15;
 

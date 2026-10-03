@@ -110,8 +110,8 @@ export const PAPER_DESIGNS = [
   },
 ];
 
-const TEX_W = 1024;
-const TEX_H = 1400;
+const TEX_W = 512;
+const TEX_H = 700;
 // è‹±æ•°å­—ã¯ Caveatã€æ—¥æœ¬èªžã¯æ‰‹æ›¸ãé¢¨ã® Yomogi ã«ãƒ•ã‚©ãƒ¼ãƒ«ãƒãƒƒã‚¯ã™ã‚‹
 const HAND_FONT = '"Caveat", "Yomogi", "Comic Sans MS", cursive';
 const INK_COLOR = "#1d1d1b";
