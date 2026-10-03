@@ -1059,11 +1059,7 @@ function updatePaperMotion(paper, dt) {
 
     if (t >= 1) {
       paper.state = "open";
-      // Trigger track modal
-      if (window.openTrackModal && paper.designIndex !== undefined) {
-        const design = PAPER_DESIGNS[paper.designIndex % PAPER_DESIGNS.length];
-        if (design) window.openTrackModal(design.title);
-      }
+
       paper.frameIdx = paper.target.frameIdx;
       paper.mesh.position.copy(paper.target.position);
       paper.mesh.quaternion.copy(paper.target.quaternion);

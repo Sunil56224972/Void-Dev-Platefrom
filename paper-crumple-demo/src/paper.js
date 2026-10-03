@@ -12,43 +12,43 @@ export const PAPER_DESIGNS = [
     title: "AI / LLM ENGINEER",
     url: "#ai-llm",
     image: "paper-crumple-demo/data/paper-protocol.svg",
-    track: "Python, LLM APIs (OpenAI/Gemini/Claude), Prompt Engineering, RAG, LangChain, Agent Frameworks"
+    skills: ["Python (Intermediate+)", "LLM APIs - OpenAI, Gemini, Claude", "Prompt Engineering & RAG", "LangChain / Agent Frameworks", "Integrate AI into products", "Bonus: Fine-tuning exp"]
   },
   {
     title: "FRONTEND DEVELOPER",
     url: "#frontend",
     image: "paper-crumple-demo/data/crumple-lab.svg",
-    track: "React/Next.js, HTML/CSS/JS, Responsive Design, Animations, Tailwind/Framer Motion"
+    skills: ["React / Next.js / Vue", "HTML, CSS, JS (must)", "Responsive Design", "CSS Animations", "Tailwind / Framer Motion", "Build polished UI fast"]
   },
   {
     title: "BACKEND DEVELOPER",
     url: "#backend",
     image: "paper-crumple-demo/data/fold-toss.svg",
-    track: "Node.js/Python/Go, REST APIs, Databases (SQL/NoSQL), Auth (JWT/OAuth), Cloud Deploy"
+    skills: ["Node.js / Python / Go", "REST API Design", "PostgreSQL / MongoDB / DynamoDB", "Auth - JWT, OAuth", "Deploy to Vercel / AWS", "Bonus: Microservices"]
   },
   {
     title: "MOBILE APP DEV",
     url: "#mobile",
     image: "paper-crumple-demo/data/origami-engine.svg",
-    track: "React Native/Flutter, API Integration, State Management, App Store Deployment"
+    skills: ["React Native / Flutter", "API Integration", "State Management", "App Store Deployment", "Cross-platform dev", "Bonus: PWA experience"]
   },
   {
     title: "UI/UX DESIGNER",
     url: "#uiux",
     image: "paper-crumple-demo/data/wastebasket-club.svg",
-    track: "Figma, Design Systems, Mobile-First Design, Motion Design, Pitch Deck Design"
+    skills: ["Figma (must)", "Design Systems", "Mobile-First Design", "Motion Design / Framer", "Pitch Deck Design", "Portfolio Required"]
   },
   {
     title: "BUG HUNTER",
     url: "#security",
     image: "paper-crumple-demo/data/grid-paper-works.svg",
-    track: "OWASP Top 10, Burp Suite, XSS/SQLi/IDOR, Recon & Enumeration, HackerOne/Bugcrowd"
+    skills: ["OWASP Top 10", "Burp Suite / Tools", "XSS, SQLi, IDOR Testing", "Recon & Enumeration", "Secure before demo", "HackerOne / Bugcrowd"]
   },
   {
     title: "DEVOPS ENGINEER",
     url: "#devops",
     image: "paper-crumple-demo/data/throwaway-studio.svg",
-    track: "AWS/GCP/Azure, Docker, CI/CD Pipelines, Quick Deployment & Scaling"
+    skills: ["AWS / GCP / Azure", "Docker & Containers", "CI/CD Pipelines", "Quick Deploy & Scale", "Monitoring & Logging", "Deploy stack in hours"]
   },
 ];
 
