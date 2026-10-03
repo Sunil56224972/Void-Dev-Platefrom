@@ -34,7 +34,20 @@
     .track-card .close-btn:hover{color:#F5A623}
     .track-card .apply-btn{display:block;width:100%;margin-top:24px;padding:14px;background:linear-gradient(135deg,#F5A623,#E8C547);color:#0A0807;border:none;border-radius:6px;font-size:15px;font-weight:700;text-transform:uppercase;letter-spacing:2px;cursor:pointer;transition:all 0.3s}
     .track-card .apply-btn:hover{transform:translateY(-2px);box-shadow:0 8px 30px #F5A62344}
-  </style>
+  
+  @media (max-width: 768px) {
+    .header { padding: 8px 12px; }
+    .header h1 { font-size: 14px; letter-spacing: 0.1em; }
+    .header a { font-size: 10px; padding: 4px 10px; }
+    .track-count { font-size: 10px; right: 10px; top: 45px; }
+    img[alt="VoidDev Character"] { height: 40vh !important; max-height: 300px !important; opacity: 0.5 !important; }
+  }
+  @media (max-width: 480px) {
+    .header h1 { font-size: 11px; }
+    img[alt="VoidDev Character"] { height: 30vh !important; max-height: 200px !important; opacity: 0.3 !important; }
+  }
+
+</style>
   <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.1/build/three.module.js","three/examples/jsm/":"https://cdn.jsdelivr.net/npm/three@0.160.1/examples/jsm/","cannon-es":"https://cdn.jsdelivr.net/npm/cannon-es@0.20.0/dist/cannon-es.js"}}</script>
 </head>
 <body>
