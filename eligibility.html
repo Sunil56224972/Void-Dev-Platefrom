@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VoidDev - Eligibility Tracks</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Yomogi&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    html,body{width:100%;height:100%;overflow:hidden;background:#0A0807;font-family:'Space Grotesk',monospace;color:#F5E6D3}
+    .header{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:12px 24px;background:rgba(10,8,7,0.92);backdrop-filter:blur(10px);border-bottom:2px solid #2a2218}
+    .header h1{font-size:18px;font-weight:700;background:linear-gradient(135deg,#F5A623,#E8C547);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-transform:uppercase;letter-spacing:2px}
+    .header a{color:#F5A623;text-decoration:none;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1px;padding:8px 16px;border:2px solid #F5A623;transition:all 0.3s}
+    .header a:hover{background:#F5A623;color:#0A0807}
+    .instructions{position:fixed;bottom:30px;left:50%;transform:translateX(-50%);z-index:90;text-align:center;padding:12px 28px;background:rgba(10,8,7,0.85);border:1px solid #F5A62355;border-radius:8px;font-size:14px;color:#F5E6D3aa;pointer-events:none;animation:pulseGlow 2s ease-in-out infinite}
+    .instructions span{color:#F5A623;font-weight:700}
+    @keyframes pulseGlow{0%,100%{border-color:#F5A62333}50%{border-color:#F5A623;box-shadow:0 0 20px #F5A62333}}
+    .track-count{position:fixed;top:70px;right:24px;z-index:90;font-size:12px;color:#F5A623;text-transform:uppercase;letter-spacing:2px;font-weight:700}
+    #app{width:100vw;height:100vh}
+    #info{display:none}
+    .track-modal{display:none;position:fixed;top:0;left:0;right:0;bottom:0;z-index:200;background:rgba(0,0,0,0.85);backdrop-filter:blur(8px);justify-content:center;align-items:center}
+    .track-modal.active{display:flex}
+    .track-card{background:linear-gradient(145deg,#1a1510,#0d0b08);border:2px solid #F5A623;border-radius:12px;padding:40px;max-width:520px;width:90%;position:relative;box-shadow:0 0 60px #F5A62322;animation:modalIn 0.4s ease-out}
+    @keyframes modalIn{from{transform:scale(0.8) translateY(40px);opacity:0}to{transform:scale(1) translateY(0);opacity:1}}
+    .track-card h2{font-size:28px;font-weight:700;background:linear-gradient(135deg,#F5A623,#E8C547);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px;text-transform:uppercase;letter-spacing:2px}
+    .track-card .track-badge{display:inline-block;padding:4px 12px;margin-bottom:20px;background:#F5A62322;border:1px solid #F5A62355;border-radius:4px;font-size:11px;color:#F5A623;text-transform:uppercase;letter-spacing:1px}
+    .track-card .skills-title{font-size:13px;color:#F5E6D388;text-transform:uppercase;letter-spacing:2px;margin-bottom:12px}
+    .track-card ul{list-style:none;padding:0}
+    .track-card ul li{padding:8px 0;border-bottom:1px solid #F5A62315;font-size:15px;color:#F5E6D3cc;display:flex;align-items:center;gap:10px}
+    .track-card ul li::before{content:"▸";color:#F5A623;font-weight:700}
+    .track-card .close-btn{position:absolute;top:16px;right:20px;background:none;border:none;color:#F5E6D366;font-size:24px;cursor:pointer;transition:color 0.2s}
+    .track-card .close-btn:hover{color:#F5A623}
+    .track-card .apply-btn{display:block;width:100%;margin-top:24px;padding:14px;background:linear-gradient(135deg,#F5A623,#E8C547);color:#0A0807;border:none;border-radius:6px;font-size:15px;font-weight:700;text-transform:uppercase;letter-spacing:2px;cursor:pointer;transition:all 0.3s}
+    .track-card .apply-btn:hover{transform:translateY(-2px);box-shadow:0 8px 30px #F5A62344}
+  </style>
+  <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.1/build/three.module.js","three/examples/jsm/":"https://cdn.jsdelivr.net/npm/three@0.160.1/examples/jsm/","cannon-es":"https://cdn.jsdelivr.net/npm/cannon-es@0.20.0/dist/cannon-es.js"}}</script>
+</head>
+<body>
+  <script>if(!localStorage.getItem('voiddev_member')){document.documentElement.style.display='none';window.location.replace('/login.html');}</script>
+  <div class="header">
+    <h1>VoidDev — Hackathon Tracks</h1>
+    <a href="/">Back to Base</a>
+  </div>
+  <div class="track-count">7 TRACKS AVAILABLE</div>
+  <div class="instructions"><span>Click</span> a paper ball to uncrumple and reveal the track · <span>Drag</span> to throw</div>
+  <div id="app"></div>
+  <div id="info">loading...</div>
+  <div class="track-modal" id="trackModal">
+    <div class="track-card">
+      <button class="close-btn" onclick="closeTrackModal()">X</button>
+      <h2 id="modalTitle">Track</h2>
+      <div class="track-badge" id="modalBadge">Track</div>
+      <div class="skills-title">Required Skills</div>
+      <ul id="modalSkills"></ul>
+      <button class="apply-btn" onclick="alert('Application submitted!')">Apply for this Track</button>
+    </div>
+  </div>
+  <script>
+    const TRACK_DETAILS={"AI / LLM ENGINEER":{badge:"AI & Machine Learning",skills:["Python (Intermediate+)","LLM APIs - OpenAI, Gemini, Claude","Prompt Engineering & RAG","LangChain / CrewAI / Agent Frameworks","Can integrate AI into products fast","Bonus: Fine-tuning experience"]},"FRONTEND DEVELOPER":{badge:"Web Frontend",skills:["React / Next.js / Vue","HTML, CSS, JavaScript (must)","Responsive & Mobile-First Design","CSS Animations & Micro-interactions","Tailwind / Framer Motion","Can build polished UI in hours"]},"BACKEND DEVELOPER":{badge:"Server & APIs",skills:["Node.js / Python / Go (any one)","REST API Design & Implementation","Database - PostgreSQL, MongoDB, DynamoDB","Authentication - JWT, OAuth","Can deploy to Vercel / AWS / Railway","Bonus: Microservices experience"]},"MOBILE APP DEV":{badge:"Mobile Development",skills:["React Native / Flutter (any one)","API Integration & State Management","App Store / Play Store Deployment","Can build working mobile demo","Cross-platform development","Bonus: PWA experience"]},"UI/UX DESIGNER":{badge:"Design & Experience",skills:["Figma - wireframes to high-fidelity","Design Systems & Component Thinking","Mobile-First Responsive Design","Motion Design / Framer","Pitch Deck & Demo Presentation","Portfolio Required"]},"BUG HUNTER":{badge:"Cybersecurity",skills:["OWASP Top 10 Knowledge","Burp Suite / Similar Tools","XSS, SQLi, IDOR Testing","Recon & Enumeration Skills","Can secure projects before demo","Bonus: HackerOne / Bugcrowd Profile"]},"DEVOPS ENGINEER":{badge:"Infrastructure & Cloud",skills:["AWS / GCP / Azure basics","Docker & Containerization","CI/CD Pipelines (GitHub Actions)","Quick Deployment & Scaling","Monitoring & Logging","Can deploy entire stack in hours"]}};
+    window.openTrackModal=function(t){const d=TRACK_DETAILS[t];if(!d)return;document.getElementById('modalTitle').textContent=t;document.getElementById('modalBadge').textContent=d.badge;document.getElementById('modalSkills').innerHTML=d.skills.map(s=>'<li>'+s+'</li>').join('');document.getElementById('trackModal').classList.add('active')};
+    window.closeTrackModal=function(){document.getElementById('trackModal').classList.remove('active')};
+    document.getElementById('trackModal').addEventListener('click',function(e){if(e.target===this)closeTrackModal()});
+  </script>
+  <script type="module" src="./paper-crumple-demo/src/main-vat.js"></script>
+</body>
+</html>
