@@ -92,16 +92,43 @@ function drawStaticLayer(ctx, design) {
   drawTitle(ctx, design.title);
 
   // ã‚µãƒ ãƒã‚¤ãƒ«ã‚¨ãƒªã‚¢ (ç”»åƒãƒ­ãƒ¼ãƒ‰ã¾ã§ã®ãƒ—ãƒ¬ãƒ¼ã‚¹ãƒ›ãƒ«ãƒ€ + æž ç·š)
-  ctx.fillStyle = "#d9d7d0";
-  ctx.fillRect(IMAGE_RECT.x, IMAGE_RECT.y, IMAGE_RECT.w, IMAGE_RECT.h);
-  ctx.strokeStyle = "#3a3a38";
-  ctx.lineWidth = 3;
-  ctx.strokeRect(IMAGE_RECT.x, IMAGE_RECT.y, IMAGE_RECT.w, IMAGE_RECT.h);
-
-  // URL (ã‚µãƒ ãƒã‚¤ãƒ«æž ã®ã™ãä¸‹)
-  ctx.fillStyle = INK_COLOR;
-  ctx.font = `62px ${HAND_FONT}`;
-  ctx.fillText(design.url, TEX_W * 0.11, IMAGE_RECT.y + IMAGE_RECT.h + 95);
+  // Draw skills list directly on the paper
+  if (design.skills && design.skills.length > 0) {
+    const startY = IMAGE_RECT.y;
+    const lineH = 56;
+    const x = TEX_W * 0.13;
+    
+    // "REQUIRED SKILLS" header
+    ctx.fillStyle = "#8B4513";
+    ctx.font = `bold 44px ${HAND_FONT}`;
+    ctx.fillText("REQUIRED SKILLS:", x, startY);
+    
+    // Underline
+    ctx.strokeStyle = "#8B4513";
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(x, startY + 10);
+    ctx.lineTo(x + 420, startY + 10);
+    ctx.stroke();
+    
+    // Skills list
+    ctx.fillStyle = INK_COLOR;
+    ctx.font = `36px ${HAND_FONT}`;
+    design.skills.forEach((skill, i) => {
+      ctx.fillText("\u25B8 " + skill, x + 10, startY + 60 + i * lineH);
+    });
+    
+    // Badge at bottom
+    ctx.fillStyle = "#8B4513";
+    ctx.font = `bold 34px ${HAND_FONT}`;
+    ctx.fillText("VOIDDEV HACKATHON SQUAD", x, startY + 85 + design.skills.length * lineH);
+  } else {
+    ctx.fillStyle = "#d9d7d0";
+    ctx.fillRect(IMAGE_RECT.x, IMAGE_RECT.y, IMAGE_RECT.w, IMAGE_RECT.h);
+    ctx.fillStyle = INK_COLOR;
+    ctx.font = `62px ${HAND_FONT}`;
+    ctx.fillText(design.url, TEX_W * 0.11, IMAGE_RECT.y + IMAGE_RECT.h + 95);
+  }
 }
 
 function drawTitle(ctx, title) {
@@ -155,6 +182,8 @@ function drawTitle(ctx, title) {
 
 // OGP ç”»åƒã‚’ cover ãƒ•ã‚£ãƒƒãƒˆã§æž å†…ã«æãè¾¼ã‚€
 function drawDesignImage(state) {
+  // Skip image if design has skills (we draw text instead)
+  if (state.design && state.design.skills && state.design.skills.length > 0) return;
   const { ctx, image } = state;
   if (!image.complete || !image.naturalWidth) return;
 
