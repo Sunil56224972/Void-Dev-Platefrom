@@ -10,45 +10,103 @@ import * as THREE from "three";
 export const PAPER_DESIGNS = [
   {
     title: "AI / LLM ENGINEER",
-    url: "#ai-llm",
-    image: "paper-crumple-demo/data/paper-protocol.svg",
-    skills: ["Python (Intermediate+)", "LLM APIs - OpenAI, Gemini, Claude", "Prompt Engineering & RAG", "LangChain / Agent Frameworks", "Integrate AI into products", "Bonus: Fine-tuning exp"]
+    url: "#ai", image: "paper-crumple-demo/data/paper-protocol.svg",
+    skills: ["Python (Intermediate+)", "LLM APIs - OpenAI, Gemini, Claude", "Prompt Engineering & RAG", "LangChain / Agent Frameworks", "Build AI features fast", "Bonus: Fine-tuning exp"]
   },
   {
     title: "FRONTEND DEVELOPER",
-    url: "#frontend",
-    image: "paper-crumple-demo/data/crumple-lab.svg",
+    url: "#frontend", image: "paper-crumple-demo/data/crumple-lab.svg",
     skills: ["React / Next.js / Vue", "HTML, CSS, JS (must)", "Responsive Design", "CSS Animations", "Tailwind / Framer Motion", "Build polished UI fast"]
   },
   {
     title: "BACKEND DEVELOPER",
-    url: "#backend",
-    image: "paper-crumple-demo/data/fold-toss.svg",
+    url: "#backend", image: "paper-crumple-demo/data/fold-toss.svg",
     skills: ["Node.js / Python / Go", "REST API Design", "PostgreSQL / MongoDB / DynamoDB", "Auth - JWT, OAuth", "Deploy to Vercel / AWS", "Bonus: Microservices"]
   },
   {
     title: "MOBILE APP DEV",
-    url: "#mobile",
-    image: "paper-crumple-demo/data/origami-engine.svg",
+    url: "#mobile", image: "paper-crumple-demo/data/origami-engine.svg",
     skills: ["React Native / Flutter", "API Integration", "State Management", "App Store Deployment", "Cross-platform dev", "Bonus: PWA experience"]
   },
   {
     title: "UI/UX DESIGNER",
-    url: "#uiux",
-    image: "paper-crumple-demo/data/wastebasket-club.svg",
+    url: "#uiux", image: "paper-crumple-demo/data/wastebasket-club.svg",
     skills: ["Figma (must)", "Design Systems", "Mobile-First Design", "Motion Design / Framer", "Pitch Deck Design", "Portfolio Required"]
   },
   {
     title: "BUG HUNTER",
-    url: "#security",
-    image: "paper-crumple-demo/data/grid-paper-works.svg",
+    url: "#security", image: "paper-crumple-demo/data/grid-paper-works.svg",
     skills: ["OWASP Top 10", "Burp Suite / Tools", "XSS, SQLi, IDOR Testing", "Recon & Enumeration", "Secure before demo", "HackerOne / Bugcrowd"]
   },
   {
     title: "DEVOPS ENGINEER",
-    url: "#devops",
-    image: "paper-crumple-demo/data/throwaway-studio.svg",
+    url: "#devops", image: "paper-crumple-demo/data/throwaway-studio.svg",
     skills: ["AWS / GCP / Azure", "Docker & Containers", "CI/CD Pipelines", "Quick Deploy & Scale", "Monitoring & Logging", "Deploy stack in hours"]
+  },
+  {
+    title: "BLOCKCHAIN DEV",
+    url: "#web3", image: "paper-crumple-demo/data/paper-protocol.svg",
+    skills: ["Solidity / Smart Contracts", "Ethers.js / Web3.js", "DeFi / NFT Protocols", "Hardhat / Foundry", "Wallet Integration", "Bonus: Audit experience"]
+  },
+  {
+    title: "DATA SCIENTIST",
+    url: "#data", image: "paper-crumple-demo/data/crumple-lab.svg",
+    skills: ["Python - Pandas, NumPy", "Data Visualization", "Machine Learning basics", "SQL & Data Pipelines", "Jupyter Notebooks", "Storytelling with data"]
+  },
+  {
+    title: "GAME DEVELOPER",
+    url: "#gamedev", image: "paper-crumple-demo/data/fold-toss.svg",
+    skills: ["Unity / Godot / Unreal", "C# or GDScript", "2D/3D Game Mechanics", "Physics & Animation", "Gamified demos", "Interactive experiences"]
+  },
+  {
+    title: "CLOUD ARCHITECT",
+    url: "#cloud", image: "paper-crumple-demo/data/origami-engine.svg",
+    skills: ["AWS / Azure / GCP", "Serverless Architecture", "Terraform / CloudFormation", "Cost Optimization", "High Availability Design", "Multi-region deployment"]
+  },
+  {
+    title: "PITCH MASTER",
+    url: "#pitch", image: "paper-crumple-demo/data/wastebasket-club.svg",
+    skills: ["Public Speaking", "Storytelling & Narrative", "Demo Presentation", "Slide Design", "Handle Q&A from judges", "Make mid project shine"]
+  },
+  {
+    title: "QA / TESTER",
+    url: "#qa", image: "paper-crumple-demo/data/grid-paper-works.svg",
+    skills: ["Manual + Auto Testing", "Playwright / Selenium", "API Testing - Postman", "Bug Reporting", "Find bugs before demo", "Edge case hunter"]
+  },
+  {
+    title: "TECHNICAL WRITER",
+    url: "#writer", image: "paper-crumple-demo/data/throwaway-studio.svg",
+    skills: ["Documentation / README", "API Documentation", "Blog & Tutorial Writing", "Project Descriptions", "Social Media Content", "Make repos look pro"]
+  },
+  {
+    title: "IOT / HARDWARE",
+    url: "#iot", image: "paper-crumple-demo/data/paper-protocol.svg",
+    skills: ["Arduino / Raspberry Pi", "ESP32 / Sensors", "Circuit Prototyping", "Embedded C / Python", "Physical + Software combo", "Real-world interaction"]
+  },
+  {
+    title: "VIDEO EDITOR",
+    url: "#video", image: "paper-crumple-demo/data/crumple-lab.svg",
+    skills: ["Premiere / After Effects", "CapCut / DaVinci", "Demo Video Creation", "Motion Graphics", "Product Walkthroughs", "Social Reels & Shorts"]
+  },
+  {
+    title: "PRODUCT MANAGER",
+    url: "#pm", image: "paper-crumple-demo/data/fold-toss.svg",
+    skills: ["User Research", "Market Analysis", "MVP Prioritization", "Sprint Planning", "Keep team on track", "Structure hackathon plan"]
+  },
+  {
+    title: "ML OPS ENGINEER",
+    url: "#mlops", image: "paper-crumple-demo/data/origami-engine.svg",
+    skills: ["Model Deployment", "MLflow / Kubeflow", "Docker + K8s for ML", "Data Pipeline Automation", "Monitoring ML models", "GPU/TPU optimization"]
+  },
+  {
+    title: "OPEN SOURCE DEV",
+    url: "#oss", image: "paper-crumple-demo/data/wastebasket-club.svg",
+    skills: ["Git & GitHub (advanced)", "PR Reviews & Issues", "Community Contribution", "Documentation Culture", "CI/CD for OSS", "Published packages"]
+  },
+  {
+    title: "NO-CODE BUILDER",
+    url: "#nocode", image: "paper-crumple-demo/data/grid-paper-works.svg",
+    skills: ["Bubble / Webflow / Framer", "Zapier / Make Automation", "Airtable / Notion", "Rapid Prototyping", "Landing Pages in minutes", "MVP without code"]
   },
 ];
 
