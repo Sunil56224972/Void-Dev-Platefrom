@@ -9,7 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Yomogi&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet" />
   <style>
     *{margin:0;padding:0;box-sizing:border-box}
-    html,body{width:100%;height:100%;overflow:hidden;background:#F7F2E7;font-family:'Space Grotesk',monospace;color:#111}
+    html,body{width:100%;height:100%;overflow:hidden;touch-action:manipulation;background:#F7F2E7;font-family:'Space Grotesk',monospace;color:#111}
     .header{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:12px 24px;background:rgba(17,17,17,0.95);backdrop-filter:blur(10px);border-bottom:2px solid #2a2218}
     .header h1{font-size:18px;font-weight:700;background:linear-gradient(135deg,#F5A623,#E8C547);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-transform:uppercase;letter-spacing:2px}
     .header a{color:#F5A623;text-decoration:none;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1px;padding:8px 16px;border:2px solid #F5A623;transition:all 0.3s}
@@ -35,6 +35,12 @@
     .track-card .apply-btn{display:block;width:100%;margin-top:24px;padding:14px;background:linear-gradient(135deg,#F5A623,#E8C547);color:#0A0807;border:none;border-radius:6px;font-size:15px;font-weight:700;text-transform:uppercase;letter-spacing:2px;cursor:pointer;transition:all 0.3s}
     .track-card .apply-btn:hover{transform:translateY(-2px);box-shadow:0 8px 30px #F5A62344}
   
+  @media (max-width: 768px) {
+    .track-card { padding: 24px; max-width: 95%; max-height: 85vh; overflow-y: auto; }
+    .track-card h2 { font-size: 20px; }
+    .track-card ul li { font-size: 13px; padding: 6px 0; }
+    .track-modal { padding: 10px; }
+  }
   @media (max-width: 768px) {
     .header { padding: 8px 12px; }
     .header h1 { font-size: 14px; letter-spacing: 0.1em; }

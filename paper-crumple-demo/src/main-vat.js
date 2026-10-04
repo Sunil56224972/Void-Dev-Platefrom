@@ -34,6 +34,13 @@ const camera = new THREE.PerspectiveCamera(
 camera.position.set(cameraSettings.x, cameraSettings.y, cameraSettings.z);
 camera.lookAt(0, cameraSettings.targetY, 0);
 
+// Mobile camera adjustment - zoom out more on portrait screens
+if (window.innerWidth < 768) {
+  camera.position.set(0, 3.0, 5.5);
+  camera.lookAt(0, 0.2, 0);
+}
+
+
 function applyCameraSettings() {
   camera.position.set(cameraSettings.x, cameraSettings.y, cameraSettings.z);
   camera.lookAt(0, cameraSettings.targetY, 0);
@@ -120,7 +127,7 @@ const animSettings = { speed: 1.5, openFrame: 4 };
 const paperSettings = {
   count: Math.min(
     MAX_PAPERS,
-    Math.max(1, (window.innerWidth < 768 ? 5 : (parseInt(urlParams.get("papers"), 10) || 10))),
+    Math.max(1, (window.innerWidth < 768 ? 8 : (parseInt(urlParams.get("papers"), 10) || 10))),
   ),
 };
 // GUI ÃƒÂ£Ã‚ÂÃ‚Â¯ ?gui=on ÃƒÂ£Ã¢â‚¬Å¡Ã¢â‚¬â„¢ÃƒÂ¤Ã‚Â»Ã‹Å“ÃƒÂ£Ã‚ÂÃ¢â‚¬ËœÃƒÂ£Ã‚ÂÃ…Â¸ÃƒÂ¦Ã¢â€žÂ¢Ã¢â‚¬Å¡ÃƒÂ£Ã‚ÂÃ‚Â ÃƒÂ£Ã‚ÂÃ¢â‚¬ËœÃƒÂ¨Ã‚Â¡Ã‚Â¨ÃƒÂ§Ã‚Â¤Ã‚ÂºÃƒÂ£Ã‚ÂÃ¢â€žÂ¢ÃƒÂ£Ã¢â‚¬Å¡Ã¢â‚¬Â¹
