@@ -25,6 +25,43 @@
     scroll-padding-top: 78px;
   }
 
+  .manga-nav {
+    position: sticky;
+    inset: 0 0 auto;
+  }
+
+  .manga-hero {
+    padding-top: 16px;
+  }
+
+  .manga-hero:before {
+    height: 430px;
+    inset: auto -18% 142px auto;
+  }
+
+  .hero-cloud--one {
+    display: none;
+  }
+
+  .manga-hero__character {
+    height: 70%;
+    inset: 30% -25% auto -19%;
+  }
+
+  .rules-character-panel img {
+    height: 70%;
+    min-height: 0;
+    object-fit: contain;
+    object-position: center bottom;
+    inset: auto 0 0;
+  }
+
+  .rules-character-panel__bubble {
+    top: 16px;
+    left: 16px;
+    max-width: min(170px, calc(100% - 32px));
+  }
+
   .manga-mobile-menu {
     max-height: calc(100vh - 74px);
     max-height: calc(100dvh - 74px);
