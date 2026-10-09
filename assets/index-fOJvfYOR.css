@@ -8,3 +8,88 @@
 .manga-logo img, .manga-hero__brand-lockup img { mix-blend-mode: multiply !important; object-fit: contain !important; }
 
 .rules-character-panel img{width:100%;height:100%;object-fit:cover;object-position:top center;min-height:500px;}
+
+/* Mobile viewport refinements */
+@media (max-width: 1080px) {
+  .manga-mobile-menu {
+    max-height: calc(100vh - 84px);
+    max-height: calc(100dvh - 84px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+@media (max-width: 760px) {
+  html {
+    scroll-padding-top: 78px;
+  }
+
+  .manga-mobile-menu {
+    max-height: calc(100vh - 74px);
+    max-height: calc(100dvh - 74px);
+  }
+
+  .manga-mobile-menu li a {
+    min-height: 44px;
+  }
+
+  .manga-hero__tagline {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+
+  .manga-hero__facts > div,
+  .manga-hero__facts strong,
+  .manga-hero__facts span {
+    min-width: 0;
+  }
+
+  .footer-email {
+    overflow-wrap: anywhere;
+  }
+}
+
+@media (max-width: 480px) {
+  .manga-nav__inner {
+    padding-right: 4px;
+  }
+
+  .manga-menu-button {
+    flex: 0 0 44px;
+  }
+
+  .manga-mobile-menu {
+    left: 8px;
+    right: 8px;
+    padding: 14px;
+  }
+
+  .manga-mobile-menu li a {
+    min-height: 48px;
+    padding: 12px 9px;
+    font-size: 1.1rem;
+  }
+
+  .manga-section-heading h2 {
+    overflow-wrap: anywhere;
+  }
+
+  .register-panel__facts {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .register-panel__facts span {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+
+  .faq-item button {
+    gap: 10px;
+  }
+
+  .faq-item button > span {
+    min-width: 0;
+  }
+}

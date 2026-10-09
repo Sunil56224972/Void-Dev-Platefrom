@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>VOID DEV — Enter the Void</title>
   <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
   <style>
@@ -265,6 +265,27 @@
       .submit-btn{font-size:1rem;padding:12px;border-width:2px;}
       .auth-tabs{border-width:2px;}
       .auth-tab:first-child{border-right-width:2px;}
+    }
+    @media(max-width:900px){
+      body{min-height:100vh;min-height:100dvh;}
+      .login-page{min-height:100vh;min-height:100dvh;padding-top:calc(48px + env(safe-area-inset-top));}
+      .topbar{
+        height:calc(48px + env(safe-area-inset-top));
+        padding-top:env(safe-area-inset-top);
+        padding-left:max(16px,env(safe-area-inset-left));
+        padding-right:max(16px,env(safe-area-inset-right));
+      }
+      .form-panel{padding-bottom:calc(80px + env(safe-area-inset-bottom));}
+    }
+    @media(max-width:600px){
+      .form-input{font-size:16px;}
+      .auth-tab{min-height:44px;}
+      .topbar-link{display:inline-flex;align-items:center;min-height:44px;}
+      .bottom-strip{
+        padding-bottom:calc(6px + env(safe-area-inset-bottom));
+        padding-left:max(12px,env(safe-area-inset-left));
+        padding-right:max(12px,env(safe-area-inset-right));
+      }
     }
   </style>
 <script>if(localStorage.getItem("voiddev_member")){window.location.replace("/");}</script></head>
