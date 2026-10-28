@@ -3,170 +3,1322 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>VoidDev - Eligibility Tracks</title>
+  <title>VOID DEV — Eligibility Bounty Tracks</title>
+  <link rel="icon" type="image/jpeg" href="/favicon.jpeg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Yomogi&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Caveat:wght@600;700&family=Space+Grotesk:wght@500;700;800&family=Yomogi&display=swap" rel="stylesheet" />
   <style>
-    *{margin:0;padding:0;box-sizing:border-box}
-    html,body{width:100%;height:100%;overflow:hidden;touch-action:manipulation;background:#F7F2E7;font-family:'Space Grotesk',monospace;color:#111}
-    .header{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:12px 24px;background:rgba(17,17,17,0.95);backdrop-filter:blur(10px);border-bottom:2px solid #2a2218}
-    .header h1{font-size:18px;font-weight:700;background:linear-gradient(135deg,#F5A623,#E8C547);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-transform:uppercase;letter-spacing:2px}
-    .header a{color:#F5A623;text-decoration:none;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1px;padding:8px 16px;border:2px solid #F5A623;transition:all 0.3s}
-    .header a:hover{background:#F5A623;color:#0A0807}
-    .instructions{position:fixed;bottom:30px;left:50%;transform:translateX(-50%);z-index:90;text-align:center;padding:12px 28px;background:rgba(17,17,17,0.85);border:1px solid #F5A62355;border-radius:8px;font-size:14px;color:#333;pointer-events:none;animation:pulseGlow 2s ease-in-out infinite}
-    .instructions span{color:#F5A623;font-weight:700}
-    @keyframes pulseGlow{0%,100%{border-color:#F5A62333}50%{border-color:#F5A623;box-shadow:0 0 20px #F5A62333}}
-    .track-count{position:fixed;top:70px;right:24px;z-index:90;font-size:12px;color:#F5A623;text-transform:uppercase;letter-spacing:2px;font-weight:700}
-    #app{width:100vw;height:100vh}
-    #info{display:none}
-    .track-modal{display:none;position:fixed;top:0;left:0;right:0;bottom:0;z-index:200;background:rgba(0,0,0,0.85);backdrop-filter:blur(8px);justify-content:center;align-items:center}
-    .track-modal.active{display:flex}
-    .track-card{background:linear-gradient(145deg,#1a1510,#0d0b08);border:2px solid #F5A623;border-radius:12px;padding:40px;max-width:520px;width:90%;position:relative;box-shadow:0 0 60px #F5A62322;animation:modalIn 0.4s ease-out}
-    @keyframes modalIn{from{transform:scale(0.8) translateY(40px);opacity:0}to{transform:scale(1) translateY(0);opacity:1}}
-    .track-card h2{font-size:28px;font-weight:700;background:linear-gradient(135deg,#F5A623,#E8C547);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px;text-transform:uppercase;letter-spacing:2px}
-    .track-card .track-badge{display:inline-block;padding:4px 12px;margin-bottom:20px;background:#F5A62322;border:1px solid #F5A62355;border-radius:4px;font-size:11px;color:#F5A623;text-transform:uppercase;letter-spacing:1px}
-    .track-card .skills-title{font-size:13px;color:#F5E6D388;text-transform:uppercase;letter-spacing:2px;margin-bottom:12px}
-    .track-card ul{list-style:none;padding:0}
-    .track-card ul li{padding:8px 0;border-bottom:1px solid #F5A62315;font-size:15px;color:#F5E6D3cc;display:flex;align-items:center;gap:10px}
-    .track-card ul li::before{content:"▸";color:#F5A623;font-weight:700}
-    .track-card .close-btn{position:absolute;top:16px;right:20px;background:none;border:none;color:#F5E6D366;font-size:24px;cursor:pointer;transition:color 0.2s}
-    .track-card .close-btn:hover{color:#F5A623}
-    .track-card .apply-btn{display:block;width:100%;margin-top:24px;padding:14px;background:linear-gradient(135deg,#F5A623,#E8C547);color:#0A0807;border:none;border-radius:6px;font-size:15px;font-weight:700;text-transform:uppercase;letter-spacing:2px;cursor:pointer;transition:all 0.3s}
-    .track-card .apply-btn:hover{transform:translateY(-2px);box-shadow:0 8px 30px #F5A62344}
-  
-  @media (max-width: 768px) {
-    .track-card { padding: 24px; max-width: 95%; max-height: 85vh; overflow-y: auto; }
-    .track-card h2 { font-size: 20px; }
-    .track-card ul li { font-size: 13px; padding: 6px 0; }
-    .track-modal { padding: 10px; }
-  }
-  @media (max-width: 768px) {
-    .header { padding: 8px 12px; }
-    .header h1 { font-size: 14px; letter-spacing: 0.1em; }
-    .header a { font-size: 10px; padding: 4px 10px; }
-    .track-count { font-size: 10px; right: 10px; top: 45px; }
-    img[alt="VoidDev Character"] { height: 40vh !important; max-height: 300px !important; opacity: 0.5 !important; }
-  }
-  @media (max-width: 480px) {
-    .header h1 { font-size: 11px; }
-    img[alt="VoidDev Character"] { height: 30vh !important; max-height: 200px !important; opacity: 0.3 !important; }
-  }
+    :root {
+      --manga-ink: #11110f;
+      --manga-paper: #f5eedf;
+      --manga-white: #fffdf5;
+      --manga-red: #e42f26;
+      --manga-yellow: #f6c84c;
+      --manga-blue: #70b7df;
+      --manga-violet: #8064c7;
+      --manga-green: #a3c94a;
+      --manga-orange: #ef8e3a;
+      --manga-teal: #3da7a0;
+    }
 
-  html,body { height: 100vh; height: 100dvh; }
-  #app { width: 100%; height: 100vh; height: 100dvh; }
-  #app canvas { display: block; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
 
-  @media (max-width: 768px) {
-    .header {
+    html, body {
+      width: 100%;
+      height: 100vh;
+      height: 100dvh;
+      overflow: hidden;
+      touch-action: manipulation;
+      background-color: var(--manga-paper);
+      font-family: 'Space Grotesk', system-ui, sans-serif;
+      color: var(--manga-ink);
+      user-select: none;
+    }
+
+    /* =========================================
+       ANIME / MANGA ARENA LAYERED BACKGROUND
+       ========================================= */
+    .manga-stage-bg {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+      background-color: var(--manga-paper);
+      background-image:
+        radial-gradient(rgba(17, 17, 15, 0.16) 1.25px, transparent 1.35px),
+        linear-gradient(90deg, rgba(17, 17, 15, 0.04) 1px, transparent 1px),
+        linear-gradient(rgba(17, 17, 15, 0.04) 1px, transparent 1px),
+        radial-gradient(circle at 50% 54%, rgba(246, 200, 76, 0.28) 0%, rgba(228, 47, 38, 0.08) 45%, transparent 75%);
+      background-size: 10px 10px, 36px 36px, 36px 36px, 100% 100%;
+    }
+
+    /* Rotating Anime Conic Speed Lines */
+    .manga-speed-lines {
+      position: absolute;
+      inset: -35%;
+      background: repeating-conic-gradient(
+        from 0deg at 50% 52%,
+        rgba(17, 17, 15, 0.065) 0deg 0.7deg,
+        transparent 0.9deg 6.5deg
+      );
+      animation: speedLineSpin 90s linear infinite;
+      pointer-events: none;
+    }
+
+    @keyframes speedLineSpin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* Crimson & Gold Manga Panel Accents in Background */
+    .manga-bg-panel-accent {
+      position: absolute;
+      top: 14%;
+      right: -6%;
+      width: min(46vw, 520px);
+      height: min(68vh, 560px);
+      background: var(--manga-red);
+      border: 4px solid var(--manga-ink);
+      box-shadow: 12px 12px 0 var(--manga-ink);
+      transform: rotate(3.2deg);
+      opacity: 0.13;
+      pointer-events: none;
+    }
+
+    .manga-bg-sun {
+      position: absolute;
+      left: 50%;
+      top: 54%;
+      width: min(76vw, 620px);
+      aspect-ratio: 1;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      border: 4px solid rgba(17, 17, 15, 0.2);
+      background-color: rgba(246, 200, 76, 0.18);
+      background-image: radial-gradient(rgba(17, 17, 15, 0.18) 1.2px, transparent 1.3px);
+      background-size: 8px 8px;
+      box-shadow: inset 0 0 0 12px rgba(255, 253, 245, 0.35);
+      pointer-events: none;
+    }
+
+    /* Floating Manga Clouds */
+    .manga-cloud {
+      position: absolute;
+      pointer-events: none;
+      height: auto;
+      opacity: 0.65;
+      filter: drop-shadow(4px 4px 0 rgba(17, 17, 15, 0.25));
+      animation: cloudDrift 12s ease-in-out infinite alternate;
+    }
+    .manga-cloud--left {
+      top: 76px;
+      left: -40px;
+      width: clamp(180px, 26vw, 340px);
+      transform: rotate(-6deg);
+    }
+    .manga-cloud--right {
+      top: 88px;
+      right: -35px;
+      width: clamp(190px, 28vw, 360px);
+      animation-delay: -5s;
+      transform: rotate(8deg);
+    }
+
+    @keyframes cloudDrift {
+      0% { translate: -8px 0; }
+      100% { translate: 12px -8px; }
+    }
+
+    /* Background Manga Kanji SFX Watermarks */
+    .manga-watermark-sfx {
+      position: absolute;
+      font-family: 'Bangers', Impact, sans-serif;
+      color: var(--manga-white);
+      -webkit-text-stroke: 3px var(--manga-ink);
+      text-shadow: 5px 5px 0 var(--manga-ink);
+      opacity: 0.22;
+      pointer-events: none;
+      line-height: 1;
+    }
+    .manga-watermark-sfx--1 {
+      top: 16%;
+      left: 4%;
+      font-size: clamp(2.4rem, 5vw, 4.5rem);
+      transform: rotate(-11deg);
+    }
+    .manga-watermark-sfx--2 {
+      bottom: 18%;
+      right: 4%;
+      font-size: clamp(2.2rem, 4.6vw, 4.2rem);
+      transform: rotate(9deg);
+    }
+
+    /* =========================================
+       3D WEBGL CANVAS & IMPACT SFX OVERLAY
+       ========================================= */
+    #app {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100vh;
+      height: 100dvh;
+      z-index: 5;
+    }
+    #app canvas {
+      display: block;
+      width: 100% !important;
+      height: 100% !important;
+    }
+
+    #info {
+      display: none;
+    }
+
+    #sfxLayer {
+      position: fixed;
+      inset: 0;
+      z-index: 25;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .manga-sfx-pop {
+      position: absolute;
+      font-family: 'Bangers', Impact, sans-serif;
+      font-size: clamp(1.4rem, 3.8vw, 2.3rem);
+      letter-spacing: 0.06em;
+      color: var(--manga-yellow);
+      -webkit-text-stroke: 2.2px var(--manga-ink);
+      text-shadow: 4px 4px 0 var(--manga-ink);
+      transform: translate(-50%, -50%) scale(0.4) rotate(-10deg);
+      animation: sfxBurst 0.72s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards;
+      white-space: nowrap;
+    }
+    .manga-sfx-pop.is-red {
+      color: var(--manga-white);
+      text-shadow: 4px 4px 0 var(--manga-red);
+    }
+
+    @keyframes sfxBurst {
+      0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.3) rotate(-14deg);
+      }
+      35% {
+        opacity: 1;
+        transform: translate(-50%, -75%) scale(1.12) rotate(6deg);
+      }
+      100% {
+        opacity: 0;
+        transform: translate(-50%, -125%) scale(0.88) rotate(-4deg);
+      }
+    }
+
+    /* =========================================
+       WEBSITE-THEMED MANGA TOP NAVBAR
+       ========================================= */
+    .manga-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: calc(10px + env(safe-area-inset-top)) clamp(10px, 2.5vw, 28px) 8px;
+      pointer-events: none;
+    }
+
+    .manga-header__inner {
+      pointer-events: auto;
+      max-width: 1360px;
+      margin: 0 auto;
+      background: var(--manga-white);
+      border: 3px solid var(--manga-ink);
+      box-shadow: 6px 6px 0 var(--manga-ink);
+      min-height: 58px;
+      padding: 6px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .manga-header__brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--manga-ink);
+      min-width: 0;
+    }
+
+    .manga-header__logo {
+      height: 40px;
+      width: auto;
+      object-fit: contain;
+      flex-shrink: 0;
+    }
+
+    .manga-header__title-wrap {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    .manga-header__eyebrow {
+      font-size: 0.62rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--manga-red);
+      line-height: 1.1;
+    }
+
+    .manga-header__title {
+      font-family: 'Bangers', Impact, sans-serif;
+      font-size: clamp(1.1rem, 2.2vw, 1.55rem);
+      letter-spacing: 0.05em;
+      color: var(--manga-ink);
+      line-height: 1.05;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .manga-header__actions {
+      display: flex;
+      align-items: center;
       gap: 8px;
-      padding-top: calc(8px + env(safe-area-inset-top));
-      padding-right: max(12px,env(safe-area-inset-right));
-      padding-left: max(12px,env(safe-area-inset-left));
+      flex-shrink: 0;
     }
-    .header h1 { min-width: 0; line-height: 1.2; }
-    .header a { flex: none; white-space: nowrap; min-height: 36px; }
-    .track-count { top: calc(48px + env(safe-area-inset-top)); right: 12px; }
-    .instructions {
+
+    .manga-btn {
+      appearance: none;
+      border: 2.5px solid var(--manga-ink);
+      box-shadow: 3px 3px 0 var(--manga-ink);
+      background: var(--manga-white);
+      color: var(--manga-ink);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.74rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 8px 13px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: transform 0.14s ease, box-shadow 0.14s ease, background 0.14s ease;
+      white-space: nowrap;
+    }
+
+    .manga-btn:hover {
+      transform: translate(-1.5px, -1.5px);
+      box-shadow: 4.5px 4.5px 0 var(--manga-ink);
+    }
+
+    .manga-btn:active {
+      transform: translate(1px, 1px);
+      box-shadow: 1.5px 1.5px 0 var(--manga-ink);
+    }
+
+    .manga-btn--yellow {
+      background: var(--manga-yellow);
+    }
+
+    .manga-btn--red {
+      background: var(--manga-red);
+      color: var(--manga-white);
+    }
+
+    .manga-btn--ink {
+      background: var(--manga-ink);
+      color: var(--manga-yellow);
+    }
+
+    /* =========================================
+       SUB-HEADER TRACK COUNTER PILL
+       ========================================= */
+    .arena-status-bar {
+      position: fixed;
+      top: calc(76px + env(safe-area-inset-top));
+      right: clamp(12px, 2.5vw, 28px);
+      z-index: 80;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      pointer-events: none;
+    }
+
+    .arena-badge {
+      background: var(--manga-yellow);
+      color: var(--manga-ink);
+      border: 2.5px solid var(--manga-ink);
+      box-shadow: 3px 3px 0 var(--manga-ink);
+      padding: 5px 11px;
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* =========================================
+       BOTTOM INTERACTIVE MANGA HUD
+       ========================================= */
+    .manga-bottom-hud {
+      position: fixed;
+      bottom: calc(16px + env(safe-area-inset-bottom));
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 95;
       width: calc(100% - 24px);
-      max-width: 420px;
-      bottom: calc(12px + env(safe-area-inset-bottom));
+      max-width: 580px;
+      pointer-events: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .hud-hint-pill {
+      pointer-events: auto;
+      background: var(--manga-white);
+      border: 3px solid var(--manga-ink);
+      box-shadow: 5px 5px 0 var(--manga-ink);
+      padding: 10px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      text-align: center;
+      font-size: 0.78rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .hud-hint-pill span.tag {
+      background: var(--manga-red);
+      color: var(--manga-white);
+      border: 2px solid var(--manga-ink);
+      padding: 2px 7px;
+      font-family: 'Bangers', Impact, sans-serif;
+      font-size: 0.92rem;
+      letter-spacing: 0.06em;
+    }
+
+    /* Active Unfolded Paper Controls Bar */
+    .hud-active-bar {
+      pointer-events: auto;
+      display: none;
+      width: 100%;
+      background: var(--manga-white);
+      border: 3px solid var(--manga-ink);
+      box-shadow: 6px 6px 0 var(--manga-ink);
       padding: 10px 14px;
-      font-size: clamp(12px,3.4vw,14px);
-      line-height: 1.4;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+      animation: hudPopIn 0.25s cubic-bezier(0.18, 0.89, 0.32, 1.28);
     }
+
+    .hud-active-bar.is-visible {
+      display: flex;
+    }
+
+    @keyframes hudPopIn {
+      from { transform: translateY(20px) scale(0.95); opacity: 0; }
+      to { transform: translateY(0) scale(1); opacity: 1; }
+    }
+
+    .hud-active-info {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    .hud-active-info small {
+      font-size: 0.62rem;
+      font-weight: 800;
+      color: var(--manga-red);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    .hud-active-info strong {
+      font-family: 'Bangers', Impact, sans-serif;
+      font-size: 1.28rem;
+      letter-spacing: 0.04em;
+      color: var(--manga-ink);
+      line-height: 1.1;
+    }
+
+    .hud-active-buttons {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    /* =========================================
+       VOIDDEV CHARACTER ARTWORK
+       ========================================= */
+    .void-character {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      height: 68vh;
+      max-height: 540px;
+      z-index: 8;
+      pointer-events: none;
+      object-fit: contain;
+      object-position: bottom left;
+      filter:
+        drop-shadow(3px 0 0 var(--manga-ink))
+        drop-shadow(-3px 0 0 var(--manga-ink))
+        drop-shadow(0 4px 0 var(--manga-ink));
+      transition: opacity 0.25s ease;
+    }
+
+    /* =========================================
+       MANGA LOADING SCREEN OVERLAY
+       ========================================= */
+    .manga-loader {
+      position: fixed;
+      inset: 0;
+      z-index: 150;
+      background: rgba(245, 238, 223, 0.92);
+      backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      transition: opacity 0.35s ease, visibility 0.35s ease;
+    }
+    .manga-loader.is-hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+    .manga-loader__box {
+      background: var(--manga-white);
+      border: 4px solid var(--manga-ink);
+      box-shadow: 8px 8px 0 var(--manga-ink);
+      padding: 28px 34px;
+      text-align: center;
+      max-width: 380px;
+      width: 100%;
+    }
+    .manga-loader__tag {
+      display: inline-block;
+      background: var(--manga-red);
+      color: var(--manga-white);
+      border: 2px solid var(--manga-ink);
+      padding: 3px 10px;
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .manga-loader__title {
+      font-family: 'Bangers', Impact, sans-serif;
+      font-size: 2rem;
+      letter-spacing: 0.05em;
+      color: var(--manga-ink);
+      margin-bottom: 6px;
+    }
+    .manga-loader__bar {
+      margin-top: 14px;
+      height: 12px;
+      border: 2.5px solid var(--manga-ink);
+      background: var(--manga-paper);
+      overflow: hidden;
+      position: relative;
+    }
+    .manga-loader__bar::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      width: 45%;
+      background: var(--manga-yellow);
+      border-right: 2.5px solid var(--manga-ink);
+      animation: loaderSlide 0.95s ease-in-out infinite alternate;
+    }
+    @keyframes loaderSlide {
+      0% { transform: translateX(-10%); }
+      100% { transform: translateX(135%); }
+    }
+
+    /* =========================================
+       MANGA BOUNTY TRACK MODAL & DIRECTORY MODAL
+       ========================================= */
     .track-modal {
-      padding: calc(10px + env(safe-area-inset-top))
-        max(10px,env(safe-area-inset-right))
-        calc(10px + env(safe-area-inset-bottom))
-        max(10px,env(safe-area-inset-left));
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 220;
+      background: rgba(17, 17, 15, 0.76);
+      backdrop-filter: blur(6px);
+      justify-content: center;
+      align-items: center;
+      padding: 16px;
     }
+    .track-modal.active {
+      display: flex;
+    }
+
     .track-card {
-      width: min(100%,520px);
-      max-height: calc(100vh - 24px);
-      max-height: calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 24px);
-      overscroll-behavior: contain;
+      background: var(--manga-white);
+      background-image: radial-gradient(rgba(17, 17, 15, 0.07) 1.2px, transparent 1.2px);
+      background-size: 10px 10px;
+      border: 4px solid var(--manga-ink);
+      box-shadow: 10px 10px 0 var(--manga-ink);
+      padding: 28px 26px 24px;
+      max-width: 520px;
+      width: 100%;
+      max-height: calc(100dvh - 36px);
+      overflow-y: auto;
+      position: relative;
+      animation: modalIn 0.28s cubic-bezier(0.18, 0.89, 0.32, 1.28);
     }
+
+    @keyframes modalIn {
+      from { transform: scale(0.88) translateY(24px); opacity: 0; }
+      to { transform: scale(1) translateY(0); opacity: 1; }
+    }
+
+    .track-card__top-ribbon {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--manga-ink);
+      color: var(--manga-yellow);
+      padding: 4px 10px;
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .track-card h2 {
+      font-family: 'Bangers', Impact, sans-serif;
+      font-size: clamp(2rem, 5vw, 2.75rem);
+      letter-spacing: 0.04em;
+      color: var(--manga-ink);
+      line-height: 1;
+      margin-bottom: 10px;
+      padding-right: 42px;
+    }
+
+    .track-card__meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+
+    .track-card .track-badge {
+      display: inline-block;
+      padding: 5px 12px;
+      background: var(--manga-yellow);
+      border: 2.5px solid var(--manga-ink);
+      box-shadow: 3px 3px 0 var(--manga-ink);
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: var(--manga-ink);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .track-card .track-bounty {
+      display: inline-block;
+      padding: 5px 12px;
+      background: var(--manga-red);
+      border: 2.5px solid var(--manga-ink);
+      box-shadow: 3px 3px 0 var(--manga-ink);
+      font-family: 'Bangers', Impact, sans-serif;
+      font-size: 0.95rem;
+      color: var(--manga-white);
+      letter-spacing: 0.06em;
+    }
+
+    .track-card .skills-box {
+      background: var(--manga-paper);
+      border: 3px solid var(--manga-ink);
+      padding: 16px;
+      box-shadow: 4px 4px 0 var(--manga-ink);
+    }
+
+    .track-card .skills-title {
+      font-family: 'Bangers', Impact, sans-serif;
+      font-size: 1.15rem;
+      color: var(--manga-ink);
+      letter-spacing: 0.06em;
+      margin-bottom: 10px;
+      padding-bottom: 6px;
+      border-bottom: 2.5px solid var(--manga-ink);
+    }
+
+    .track-card ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .track-card ul li {
+      padding: 8px 0;
+      border-bottom: 1.5px dashed rgba(17, 17, 15, 0.2);
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--manga-ink);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .track-card ul li:last-child {
+      border-bottom: none;
+    }
+    .track-card ul li::before {
+      content: "✦";
+      display: inline-grid;
+      place-items: center;
+      width: 20px;
+      height: 20px;
+      background: var(--manga-red);
+      color: var(--manga-white);
+      border: 2px solid var(--manga-ink);
+      font-size: 0.7rem;
+      flex-shrink: 0;
+    }
+
     .track-card .close-btn {
-      top: 8px;
-      right: 8px;
-      width: 44px;
-      height: 44px;
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      width: 38px;
+      height: 38px;
+      background: var(--manga-white);
+      border: 2.5px solid var(--manga-ink);
+      box-shadow: 3px 3px 0 var(--manga-ink);
+      color: var(--manga-ink);
+      font-family: 'Bangers', Impact, sans-serif;
+      font-size: 1.2rem;
+      cursor: pointer;
       display: grid;
       place-items: center;
     }
-    .track-card h2 { padding-right: 34px; overflow-wrap: anywhere; }
-    .track-card .apply-btn { min-height: 48px; }
-  }
-
-  @media (max-width: 480px) {
-    .header h1 {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      font-size: clamp(10px,3.3vw,12px);
-      letter-spacing: 0.06em;
+    .track-card .close-btn:hover {
+      background: var(--manga-red);
+      color: var(--manga-white);
     }
-    .header a { padding: 6px 8px; font-size: 10px; }
-    .track-count { font-size: 9px; letter-spacing: 0.1em; }
-    .track-card { padding: 20px 16px; }
-    img[alt="VoidDev Character"] {
-      height: 30dvh !important;
-      max-height: 200px !important;
-      max-width: 45vw !important;
-      object-fit: contain;
-      object-position: bottom left;
-    }
-  }
 
-  @media (max-height: 520px) and (max-width: 900px) {
-    .instructions { bottom: calc(8px + env(safe-area-inset-bottom)); }
-    .track-card {
-      max-height: calc(100vh - 16px);
-      max-height: calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 16px);
+    .track-card .apply-btn {
+      display: block;
+      width: 100%;
+      margin-top: 18px;
+      padding: 14px;
+      background: var(--manga-red);
+      color: var(--manga-white);
+      border: 3px solid var(--manga-ink);
+      box-shadow: 5px 5px 0 var(--manga-ink);
+      font-family: 'Bangers', Impact, sans-serif;
+      font-size: 1.35rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
     }
-  }
+    .track-card .apply-btn:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 7px 7px 0 var(--manga-ink);
+      background: var(--manga-yellow);
+      color: var(--manga-ink);
+    }
 
-</style>
-  <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.1/build/three.module.js","three/examples/jsm/":"https://cdn.jsdelivr.net/npm/three@0.160.1/examples/jsm/","cannon-es":"https://cdn.jsdelivr.net/npm/cannon-es@0.20.0/dist/cannon-es.js"}}</script>
+    /* All 20 Tracks Directory Grid Modal */
+    .directory-card {
+      max-width: 860px;
+    }
+    .directory-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(215px, 1fr));
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .directory-item {
+      background: var(--manga-paper);
+      border: 2.5px solid var(--manga-ink);
+      box-shadow: 3px 3px 0 var(--manga-ink);
+      padding: 10px 12px;
+      text-align: left;
+      cursor: pointer;
+      transition: transform 0.12s ease, background 0.12s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+    .directory-item:hover {
+      background: var(--manga-yellow);
+      transform: translate(-2px, -2px);
+    }
+    .directory-item small {
+      font-size: 0.62rem;
+      font-weight: 800;
+      color: var(--manga-red);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .directory-item strong {
+      font-family: 'Bangers', Impact, sans-serif;
+      font-size: 1.1rem;
+      letter-spacing: 0.04em;
+      color: var(--manga-ink);
+    }
+
+    /* =========================================
+       MOBILE RESPONSIVE TUNING
+       ========================================= */
+    @media (max-width: 768px) {
+      .manga-header__inner {
+        min-height: 50px;
+        padding: 5px 8px;
+        box-shadow: 4px 4px 0 var(--manga-ink);
+      }
+      .manga-header__logo {
+        height: 32px;
+      }
+      .manga-header__eyebrow {
+        font-size: 0.54rem;
+      }
+      .manga-header__title {
+        font-size: 1rem;
+      }
+      .manga-btn {
+        font-size: 0.66rem;
+        padding: 6px 9px;
+        box-shadow: 2.5px 2.5px 0 var(--manga-ink);
+      }
+      .arena-status-bar {
+        top: calc(66px + env(safe-area-inset-top));
+        right: 10px;
+      }
+      .arena-badge {
+        font-size: 0.6rem;
+        padding: 4px 8px;
+      }
+      .void-character {
+        height: 30dvh !important;
+        max-height: 210px !important;
+        max-width: 42vw !important;
+        opacity: 0.85;
+      }
+      .hud-hint-pill {
+        font-size: 0.68rem;
+        padding: 8px 12px;
+      }
+      .hud-active-bar {
+        padding: 9px 11px;
+      }
+      .hud-active-info strong {
+        font-size: 1.1rem;
+      }
+      .track-card {
+        padding: 20px 16px;
+        box-shadow: 6px 6px 0 var(--manga-ink);
+      }
+      .directory-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      }
+    }
+
+    @media (max-width: 420px) {
+      .manga-header__eyebrow {
+        display: none;
+      }
+      .manga-btn span.hide-xs {
+        display: none;
+      }
+    }
+  </style>
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.160.1/build/three.module.js",
+        "three/examples/jsm/": "https://cdn.jsdelivr.net/npm/three@0.160.1/examples/jsm/",
+        "cannon-es": "https://cdn.jsdelivr.net/npm/cannon-es@0.20.0/dist/cannon-es.js"
+      }
+    }
+  </script>
 </head>
 <body>
-  <script>if(!localStorage.getItem('voiddev_member')){document.documentElement.style.display='none';window.location.replace('/login.html');}</script>
-  <div class="header">
-    <h1>VoidDev — Hackathon Tracks</h1>
-    <a href="/">Back to Base</a>
+  <script>
+    if (!localStorage.getItem('voiddev_member')) {
+      document.documentElement.style.display = 'none';
+      window.location.replace('/login.html');
+    }
+  </script>
+
+  <!-- ANIME / MANGA ARENA LAYERED BACKGROUND -->
+  <div class="manga-stage-bg" aria-hidden="true">
+    <div class="manga-speed-lines"></div>
+    <div class="manga-bg-panel-accent"></div>
+    <div class="manga-bg-sun"></div>
+    <img src="/assets/transparent-cloud-D_K61Qar.webp" alt="" class="manga-cloud manga-cloud--left" />
+    <img src="/assets/gold-cloud-D1ztSPhY.webp" alt="" class="manga-cloud manga-cloud--right" />
+    <div class="manga-watermark-sfx manga-watermark-sfx--1">ゴゴゴゴ</div>
+    <div class="manga-watermark-sfx manga-watermark-sfx--2">ドドド!</div>
   </div>
-  <div class="track-count">20 TRACKS AVAILABLE</div>
-  <div id="app"></div>
-  <div id="info">loading...</div>
-  <div class="track-modal" id="trackModal">
-    <div class="track-card">
-      <button class="close-btn" onclick="closeTrackModal()">X</button>
-      <h2 id="modalTitle">Track</h2>
-      <div class="track-badge" id="modalBadge">Track</div>
-      <div class="skills-title">Required Skills</div>
-      <ul id="modalSkills"></ul>
-      <button class="apply-btn" onclick="alert('Application submitted!')">Apply for this Track</button>
+
+  <!-- MANGA LOADING SCREEN (Hidden automatically once 3D VAT loads) -->
+  <div class="manga-loader" id="mangaLoader">
+    <div class="manga-loader__box">
+      <span class="manga-loader__tag">CHAPTER 03 // ARENA</span>
+      <div class="manga-loader__title">SUMMONING BOUNTY SCROLLS...</div>
+      <p style="font-size:0.78rem;font-weight:700;color:#5e5a50;">Preparing 20 Anime Skill Track Paper Balls</p>
+      <div class="manga-loader__bar"></div>
     </div>
   </div>
+
+  <!-- TOP WEBSITE-THEMED MANGA HEADER -->
+  <header class="manga-header">
+    <div class="manga-header__inner">
+      <a href="/" class="manga-header__brand" aria-label="VoidDev Home">
+        <img src="/assets/voiddev-nav-v2.png" alt="VoidDev" class="manga-header__logo" />
+        <div class="manga-header__title-wrap">
+          <span class="manga-header__eyebrow">03 // ELIGIBILITY ARENA</span>
+          <span class="manga-header__title">HACKATHON BOUNTY TRACKS</span>
+        </div>
+      </a>
+      <div class="manga-header__actions">
+        <button type="button" class="manga-btn manga-btn--yellow" onclick="window.reshufflePapers && window.reshufflePapers()">
+          🎲 <span class="hide-xs">DROP</span> BALLS
+        </button>
+        <button type="button" class="manga-btn" onclick="openDirectoryModal()">
+          📜 <span class="hide-xs">ALL 20</span> TRACKS
+        </button>
+        <a href="/" class="manga-btn manga-btn--red">← BASE</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- STATUS PILL -->
+  <div class="arena-status-bar">
+    <div class="arena-badge">👑 20 BOUNTY TRACKS AVAILABLE</div>
+  </div>
+
+  <!-- 3D WEBGL STAGE -->
+  <div id="app"></div>
+  <div id="info">loading...</div>
+  <div id="sfxLayer" aria-hidden="true"></div>
+
+  <!-- BOTTOM MANGA HUD -->
+  <div class="manga-bottom-hud">
+    <div class="hud-hint-pill" id="hudHintPill">
+      <span class="tag">ACTION</span>
+      <span>TAP ANY PAPER BALL TO UNFOLD TRACK • DRAG TO THROW</span>
+    </div>
+
+    <div class="hud-active-bar" id="hudActiveBar">
+      <div class="hud-active-info">
+        <small id="hudActiveBadge">BOUNTY TRACK</small>
+        <strong id="hudActiveTitle">AI / LLM ENGINEER</strong>
+      </div>
+      <div class="hud-active-buttons">
+        <button type="button" class="manga-btn manga-btn--yellow" onclick="window.openCurrentTrackModal && window.openCurrentTrackModal()">
+          🔍 FULL BRIEF & APPLY
+        </button>
+        <button type="button" class="manga-btn manga-btn--red" onclick="window.closeActivePaper && window.closeActivePaper()">
+          💥 CRUMPLE & TOSS
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SINGLE TRACK BOUNTY MODAL -->
+  <div class="track-modal" id="trackModal">
+    <div class="track-card">
+      <button class="close-btn" onclick="closeTrackModal()" aria-label="Close">✕</button>
+      <div class="track-card__top-ribbon">★ VOIDDEV GRAND ALLIANCE // BOUNTY SCROLL ★</div>
+      <h2 id="modalTitle">Track</h2>
+      <div class="track-card__meta-row">
+        <span class="track-badge" id="modalBadge">Category</span>
+        <span class="track-bounty" id="modalBounty">฿ 8,800,000,000</span>
+      </div>
+      <div class="skills-box">
+        <div class="skills-title">⚔ REQUIRED SKILLS & TECH ARSENAL</div>
+        <ul id="modalSkills"></ul>
+      </div>
+      <button class="apply-btn" onclick="applyForCurrentTrack()">⚡ CLAIM & APPLY FOR THIS TRACK</button>
+    </div>
+  </div>
+
+  <!-- ALL 20 TRACKS DIRECTORY MODAL -->
+  <div class="track-modal" id="directoryModal">
+    <div class="track-card directory-card">
+      <button class="close-btn" onclick="closeDirectoryModal()" aria-label="Close">✕</button>
+      <div class="track-card__top-ribbon">★ ALL 20 ELIGIBILITY TRACKS // QUICK SELECT ★</div>
+      <h2>SELECT A BOUNTY TRACK</h2>
+      <p style="font-size:0.82rem;font-weight:700;color:#5e5a50;">Tap any track below to unfold its 3D Bounty Scroll or inspect requirements:</p>
+      <div class="directory-grid" id="directoryGrid"></div>
+    </div>
+  </div>
+
+  <!-- CHARACTER ART -->
+  <img src="/booooom.png" alt="VoidDev Character" class="void-character" />
+
   <script>
-    const TRACK_DETAILS={"AI / LLM ENGINEER":{badge:"AI & Machine Learning",skills:["Python (Intermediate+)","LLM APIs - OpenAI, Gemini, Claude","Prompt Engineering & RAG","LangChain / CrewAI / Agent Frameworks","Can integrate AI into products fast","Bonus: Fine-tuning experience"]},"FRONTEND DEVELOPER":{badge:"Web Frontend",skills:["React / Next.js / Vue","HTML, CSS, JavaScript (must)","Responsive & Mobile-First Design","CSS Animations & Micro-interactions","Tailwind / Framer Motion","Can build polished UI in hours"]},"BACKEND DEVELOPER":{badge:"Server & APIs",skills:["Node.js / Python / Go (any one)","REST API Design & Implementation","Database - PostgreSQL, MongoDB, DynamoDB","Authentication - JWT, OAuth","Can deploy to Vercel / AWS / Railway","Bonus: Microservices experience"]},"MOBILE APP DEV":{badge:"Mobile Development",skills:["React Native / Flutter (any one)","API Integration & State Management","App Store / Play Store Deployment","Can build working mobile demo","Cross-platform development","Bonus: PWA experience"]},"UI/UX DESIGNER":{badge:"Design & Experience",skills:["Figma - wireframes to high-fidelity","Design Systems & Component Thinking","Mobile-First Responsive Design","Motion Design / Framer","Pitch Deck & Demo Presentation","Portfolio Required"]},"BUG HUNTER":{badge:"Cybersecurity",skills:["OWASP Top 10 Knowledge","Burp Suite / Similar Tools","XSS, SQLi, IDOR Testing","Recon & Enumeration Skills","Can secure projects before demo","Bonus: HackerOne / Bugcrowd Profile"]},"DEVOPS ENGINEER":{badge:"Infrastructure & Cloud",skills:["AWS / GCP / Azure basics","Docker & Containerization","CI/CD Pipelines (GitHub Actions)","Quick Deployment & Scaling","Monitoring & Logging","Can deploy entire stack in hours"]}};
-    window.openTrackModal=function(t){const d=TRACK_DETAILS[t];if(!d)return;document.getElementById('modalTitle').textContent=t;document.getElementById('modalBadge').textContent=d.badge;document.getElementById('modalSkills').innerHTML=d.skills.map(s=>'<li>'+s+'</li>').join('');document.getElementById('trackModal').classList.add('active')};
-    window.closeTrackModal=function(){document.getElementById('trackModal').classList.remove('active')};
-    document.getElementById('trackModal').addEventListener('click',function(e){if(e.target===this)closeTrackModal()});
+    const TRACK_DETAILS = {
+      "AI / LLM ENGINEER": {
+        badge: "AI & Machine Learning",
+        bounty: "฿ 8,800,000,000",
+        skills: [
+          "Python (Intermediate+)",
+          "LLM APIs - OpenAI, Gemini, Claude",
+          "Prompt Engineering & RAG",
+          "LangChain / CrewAI / Agent Frameworks",
+          "Can integrate AI into products fast",
+          "Bonus: Fine-tuning experience"
+        ]
+      },
+      "FRONTEND DEVELOPER": {
+        badge: "Web Frontend",
+        bounty: "฿ 7,500,000,000",
+        skills: [
+          "React / Next.js / Vue",
+          "HTML, CSS, JavaScript (must)",
+          "Responsive & Mobile-First Design",
+          "CSS Animations & Micro-interactions",
+          "Tailwind / Framer Motion",
+          "Can build polished UI in hours"
+        ]
+      },
+      "BACKEND DEVELOPER": {
+        badge: "Server & APIs",
+        bounty: "฿ 7,800,000,000",
+        skills: [
+          "Node.js / Python / Go (any one)",
+          "REST API Design & Implementation",
+          "Database - PostgreSQL, MongoDB, DynamoDB",
+          "Authentication - JWT, OAuth",
+          "Can deploy to Vercel / AWS / Railway",
+          "Bonus: Microservices experience"
+        ]
+      },
+      "MOBILE APP DEV": {
+        badge: "Mobile Development",
+        bounty: "฿ 7,200,000,000",
+        skills: [
+          "React Native / Flutter (any one)",
+          "API Integration & State Management",
+          "App Store / Play Store Deployment",
+          "Can build working mobile demo",
+          "Cross-platform development",
+          "Bonus: PWA experience"
+        ]
+      },
+      "UI/UX DESIGNER": {
+        badge: "Design & Experience",
+        bounty: "฿ 6,900,000,000",
+        skills: [
+          "Figma - wireframes to high-fidelity",
+          "Design Systems & Component Thinking",
+          "Mobile-First Responsive Design",
+          "Motion Design / Framer",
+          "Pitch Deck & Demo Presentation",
+          "Portfolio Required"
+        ]
+      },
+      "BUG HUNTER": {
+        badge: "Cybersecurity",
+        bounty: "฿ 8,500,000,000",
+        skills: [
+          "OWASP Top 10 Knowledge",
+          "Burp Suite / Similar Tools",
+          "XSS, SQLi, IDOR Testing",
+          "Recon & Enumeration Skills",
+          "Can secure projects before demo",
+          "Bonus: HackerOne / Bugcrowd Profile"
+        ]
+      },
+      "DEVOPS ENGINEER": {
+        badge: "Infrastructure & Cloud",
+        bounty: "฿ 7,600,000,000",
+        skills: [
+          "AWS / GCP / Azure basics",
+          "Docker & Containerization",
+          "CI/CD Pipelines (GitHub Actions)",
+          "Quick Deployment & Scaling",
+          "Monitoring & Logging",
+          "Can deploy entire stack in hours"
+        ]
+      },
+      "BLOCKCHAIN DEV": {
+        badge: "Web3 & Smart Contracts",
+        bounty: "฿ 8,100,000,000",
+        skills: [
+          "Solidity / Rust Smart Contracts",
+          "Ethers.js / Viem / Web3.js",
+          "DeFi / NFT / Token Protocols",
+          "Hardhat / Foundry Testing",
+          "Wallet & Chain Integration",
+          "Bonus: Smart Contract Auditing"
+        ]
+      },
+      "DATA SCIENTIST": {
+        badge: "Analytics & ML",
+        bounty: "฿ 7,400,000,000",
+        skills: [
+          "Python - Pandas, NumPy, SciPy",
+          "Interactive Data Visualization",
+          "Scikit-Learn & ML Modeling",
+          "SQL & ETL Data Pipelines",
+          "Jupyter & Rapid Experimentation",
+          "Compelling Storytelling with Data"
+        ]
+      },
+      "GAME DEVELOPER": {
+        badge: "Interactive & 3D",
+        bounty: "฿ 7,700,000,000",
+        skills: [
+          "Unity / Godot / Unreal / Three.js",
+          "C#, GDScript, or WebGL Shaders",
+          "2D/3D Game Feel & Mechanics",
+          "Real-time Physics & Animation",
+          "Gamified Hackathon Demos",
+          "High-FPS Interactive Experiences"
+        ]
+      },
+      "CLOUD ARCHITECT": {
+        badge: "Distributed Systems",
+        bounty: "฿ 8,200,000,000",
+        skills: [
+          "AWS / Azure / GCP Multi-Cloud",
+          "Serverless & Event-Driven Arch",
+          "Terraform / CloudFormation IaC",
+          "Cost & Latency Optimization",
+          "High Availability & Failover",
+          "Multi-Region Edge Deployment"
+        ]
+      },
+      "PITCH MASTER": {
+        badge: "Storytelling & Demo",
+        bounty: "฿ 6,800,000,000",
+        skills: [
+          "High-Impact Public Speaking",
+          "Storytelling & Problem Narrative",
+          "Live Demo Choreography",
+          "Manga-Grade Slide Deck Design",
+          "Crush Judge Q&A Under Pressure",
+          "Turn Prototypes into Winners"
+        ]
+      },
+      "QA / TESTER": {
+        badge: "Quality & Reliability",
+        bounty: "฿ 6,400,000,000",
+        skills: [
+          "Manual + Automated E2E Testing",
+          "Playwright / Cypress / Selenium",
+          "API Stress Testing - Postman",
+          "Precision Bug Reproduction",
+          "Eliminate Demo-Breaking Bugs",
+          "Relentless Edge-Case Hunter"
+        ]
+      },
+      "TECHNICAL WRITER": {
+        badge: "Docs & Lore",
+        bounty: "฿ 6,100,000,000",
+        skills: [
+          "Crystal-Clear README & Architecture",
+          "OpenAPI / Swagger Documentation",
+          "Technical Deep-Dive Blogs",
+          "Judge Submission Write-ups",
+          "Developer Relations Content",
+          "Make GitHub Repos Look Legendary"
+        ]
+      },
+      "IOT / HARDWARE": {
+        badge: "Embedded & Robotics",
+        bounty: "฿ 7,900,000,000",
+        skills: [
+          "Arduino / Raspberry Pi / Jetson",
+          "ESP32 & Sensor Fusion",
+          "Rapid Circuit Prototyping",
+          "Embedded C / C++ / MicroPython",
+          "Hardware + Cloud Telemetry",
+          "Real-World Physical Computing"
+        ]
+      },
+      "VIDEO EDITOR": {
+        badge: "Motion & Visuals",
+        bounty: "฿ 6,600,000,000",
+        skills: [
+          "Premiere Pro / After Effects",
+          "DaVinci Resolve / CapCut Pro",
+          "Hype Hackathon Trailer Creation",
+          "Anime Motion Graphics & SFX",
+          "Crisp 2-Minute Product Demos",
+          "Viral Launch Reels & Shorts"
+        ]
+      },
+      "PRODUCT MANAGER": {
+        badge: "Strategy & Execution",
+        bounty: "฿ 7,100,000,000",
+        skills: [
+          "Rapid User & Problem Research",
+          "Market & Competitor Analysis",
+          "Ruthless 8-Hour MVP Scoping",
+          "Team Sprint Coordination",
+          "Keep Squad Focused & Shipping",
+          "Align Tech with Judge Rubric"
+        ]
+      },
+      "ML OPS ENGINEER": {
+        badge: "AI Infrastructure",
+        bounty: "฿ 8,300,000,000",
+        skills: [
+          "Fast Model Serving (vLLM / ONNX)",
+          "MLflow / Weights & Biases",
+          "Docker + GPU Containerization",
+          "Automated Vector & Data Pipelines",
+          "Model Latency & Cost Tuning",
+          "Production AI Reliability"
+        ]
+      },
+      "OPEN SOURCE DEV": {
+        badge: "Community & Packages",
+        bounty: "฿ 7,000,000,000",
+        skills: [
+          "Advanced Git & GitHub Workflows",
+          "Clean SDK / Library Design",
+          "PR Reviews & Issue Triage",
+          "Automated Releases & Versioning",
+          "Developer Experience (DX) Focus",
+          "Published npm / PyPI / Crates"
+        ]
+      },
+      "NO-CODE BUILDER": {
+        badge: "Rapid Prototyping",
+        bounty: "฿ 6,300,000,000",
+        skills: [
+          "Framer / Webflow / Bubble",
+          "n8n / Make / Zapier Workflows",
+          "Supabase / Airtable / Notion",
+          "AI Workflow Chaining",
+          "Ship Full MVPs in 60 Minutes",
+          "Seamless API Webhook Glue"
+        ]
+      }
+    };
+
+    // Populate All 20 Tracks Directory Modal
+    const directoryGrid = document.getElementById('directoryGrid');
+    Object.keys(TRACK_DETAILS).forEach((title, idx) => {
+      const item = TRACK_DETAILS[title];
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'directory-item';
+      btn.innerHTML = `<small>#${String(idx + 1).padStart(2, '0')} • ${item.badge}</small><strong>${title}</strong>`;
+      btn.onclick = () => {
+        closeDirectoryModal();
+        if (typeof window.summonTrackPaper === 'function') {
+          window.summonTrackPaper(title);
+        } else {
+          window.openTrackModal(title);
+        }
+      };
+      directoryGrid.appendChild(btn);
+    });
+
+    window.hideMangaLoader = function () {
+      const loader = document.getElementById('mangaLoader');
+      if (loader) loader.classList.add('is-hidden');
+    };
+
+    // Fallback auto-hide loader after 6s just in case
+    setTimeout(() => window.hideMangaLoader(), 6000);
+
+    // 2D Manga Onomatopoeia SFX Burst on Ball Landing
+    const SFX_WORDS = ["ドン!", "バサッ!", "BAM!", "ドドド!", "THUD!", "ゴゴゴ!"];
+    let lastSfxTime = 0;
+    window.spawnMangaImpactSfx = function (x, y, idx = 0) {
+      const now = performance.now();
+      if (now - lastSfxTime < 95) return; // Throttle when many balls land simultaneously
+      lastSfxTime = now;
+      if (x < 20 || x > window.innerWidth - 20 || y < 50 || y > window.innerHeight - 30) return;
+
+      const layer = document.getElementById('sfxLayer');
+      if (!layer) return;
+      const el = document.createElement('div');
+      el.className = 'manga-sfx-pop' + (idx % 2 === 1 ? ' is-red' : '');
+      el.textContent = SFX_WORDS[idx % SFX_WORDS.length];
+      el.style.left = x + 'px';
+      el.style.top = y + 'px';
+      layer.appendChild(el);
+      setTimeout(() => el.remove(), 750);
+    };
+
+    // Sync Bottom HUD when a 3D paper ball unfolds or closes
+    window.onPaperStateChange = function (design, state) {
+      const hint = document.getElementById('hudHintPill');
+      const bar = document.getElementById('hudActiveBar');
+      if (state === 'open' && design) {
+        hint.style.display = 'none';
+        bar.classList.add('is-visible');
+        document.getElementById('hudActiveTitle').textContent = design.title;
+        document.getElementById('hudActiveBadge').textContent =
+          (design.badge || 'BOUNTY TRACK') + ' • ฿ ' + (design.bounty || '7,500,000,000');
+      } else {
+        bar.classList.remove('is-visible');
+        hint.style.display = 'flex';
+      }
+    };
+
+    window.openTrackModal = function (t) {
+      const d = TRACK_DETAILS[t];
+      if (!d) return;
+      document.getElementById('modalTitle').textContent = t;
+      document.getElementById('modalBadge').textContent = d.badge;
+      document.getElementById('modalBounty').textContent = d.bounty || '฿ 7,500,000,000';
+      document.getElementById('modalSkills').innerHTML = d.skills.map(s => '<li>' + s + '</li>').join('');
+      document.getElementById('trackModal').classList.add('active');
+    };
+
+    window.closeTrackModal = function () {
+      document.getElementById('trackModal').classList.remove('active');
+    };
+
+    window.openDirectoryModal = function () {
+      document.getElementById('directoryModal').classList.add('active');
+    };
+
+    window.closeDirectoryModal = function () {
+      document.getElementById('directoryModal').classList.remove('active');
+    };
+
+    window.applyForCurrentTrack = function () {
+      const title = document.getElementById('modalTitle').textContent;
+      closeTrackModal();
+      alert('⚡ Bounty Track Selected: ' + title + ' — You are locked in for VoidDev Hackathon!');
+    };
+
+    document.getElementById('trackModal').addEventListener('click', function (e) {
+      if (e.target === this) closeTrackModal();
+    });
+    document.getElementById('directoryModal').addEventListener('click', function (e) {
+      if (e.target === this) closeDirectoryModal();
+    });
   </script>
   <script type="module" src="./paper-crumple-demo/src/main-vat.js"></script>
-
-  <img src="/booooom.png" alt="VoidDev Character" style="
-    position:fixed;
-    bottom:0;
-    left:0;
-    height:85vh;
-    max-height:700px;
-    z-index:10;
-    pointer-events:none;
-    filter:drop-shadow(4px 4px 12px rgba(0,0,0,0.3));
-    object-fit:contain;
-  " />
 </body>
 </html>
