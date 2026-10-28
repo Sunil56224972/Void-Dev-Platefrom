@@ -22,9 +22,26 @@ html, body {
 /* Hide unused sections & empty Tier 2/3 SSR placeholders immediately to avoid layout shift */
 #prizes,
 #sponsors,
-#organisers .section-shell > div:nth-of-type(2),
-#organisers .section-shell > div:nth-of-type(3) {
+#organisers .section-shell > div:nth-of-type(3),
+#organisers .section-shell > div:nth-of-type(4) {
   display: none !important;
+}
+
+/* Ensure Team Members (#organisers Tier 1) are always visible on mobile and desktop */
+#organisers {
+  content-visibility: visible !important;
+  contain-intrinsic-size: none !important;
+}
+
+#organisers .section-shell > div:nth-of-type(1),
+#organisers .section-shell > div:nth-of-type(2) {
+  display: block !important;
+}
+
+#organisers .manga-section-heading,
+#organisers .grid > div {
+  opacity: 1 !important;
+  transform: none !important;
 }
 
 .rules-character-panel img {
