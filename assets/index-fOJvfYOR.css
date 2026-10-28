@@ -1,15 +1,43 @@
-﻿html.lenis,html.lenis body{height:auto}.lenis:not(.lenis-autoToggle).lenis-stopped{overflow:clip}.lenis [data-lenis-prevent],.lenis [data-lenis-prevent-wheel],.lenis [data-lenis-prevent-touch],.lenis [data-lenis-prevent-vertical],.lenis [data-lenis-prevent-horizontal]{overscroll-behavior:contain}.lenis.lenis-smooth iframe{pointer-events:none}.lenis.lenis-autoToggle{transition-behavior:allow-discrete;transition-property:overflow;transition-duration:1ms}
+html.lenis,html.lenis body{height:auto}.lenis:not(.lenis-autoToggle).lenis-stopped{overflow:clip}.lenis [data-lenis-prevent],.lenis [data-lenis-prevent-wheel],.lenis [data-lenis-prevent-touch],.lenis [data-lenis-prevent-vertical],.lenis [data-lenis-prevent-horizontal]{overscroll-behavior:contain}.lenis.lenis-smooth iframe{pointer-events:none}.lenis.lenis-autoToggle{transition-behavior:allow-discrete;transition-property:overflow;transition-duration:1ms}
 
-
-
-
+/* Core brand asset blending */
 .manga-hero__brand-lockup img { mix-blend-mode: multiply !important; }
-
 .manga-logo img, .manga-hero__brand-lockup img { mix-blend-mode: multiply !important; object-fit: contain !important; }
 
-.rules-character-panel img{width:100%;height:100%;object-fit:cover;object-position:top center;min-height:500px;}
+/* Prevent any horizontal scrollbars across all viewports */
+html, body {
+  overflow-x: hidden;
+  max-width: 100%;
+  -webkit-text-size-adjust: 100%;
+}
 
-/* Mobile viewport refinements */
+#main-content,
+.manga-section,
+.register-section,
+.manga-footer {
+  overflow-x: clip;
+  max-width: 100vw;
+}
+
+/* Hide unused sections & empty Tier 2/3 SSR placeholders immediately to avoid layout shift */
+#prizes,
+#sponsors,
+#organisers .section-shell > div:nth-of-type(2),
+#organisers .section-shell > div:nth-of-type(3) {
+  display: none !important;
+}
+
+.rules-character-panel img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  min-height: 500px;
+}
+
+/* ==========================================================================
+   TABLET & MOBILE NAVIGATION REFINEMENTS (<= 1080px)
+   ========================================================================== */
 @media (max-width: 1080px) {
   .manga-mobile-menu {
     max-height: calc(100vh - 84px);
@@ -17,85 +45,745 @@
     overflow-y: auto;
     overscroll-behavior: contain;
     -webkit-overflow-scrolling: touch;
+    z-index: 90;
   }
 }
 
-@media (max-width: 760px) {
+/* ==========================================================================
+   COMPREHENSIVE MOBILE RESPONSIVENESS (<= 768px)
+   ========================================================================== */
+@media (max-width: 768px) {
   html {
-    scroll-padding-top: 78px;
+    scroll-padding-top: 74px;
   }
 
+  /* Sticky, compact, touch-friendly top navbar */
   .manga-nav {
     position: sticky;
     inset: 0 0 auto;
+    padding: 8px 10px;
+    z-index: 100;
   }
 
-  .manga-hero {
-    padding-top: 16px;
+  .manga-nav__inner {
+    min-height: 50px;
+    padding: 0 6px 0 4px;
+    box-shadow: 4px 4px 0 #11110f;
   }
 
-  .manga-hero:before {
-    height: 430px;
-    inset: auto -18% 142px auto;
+  .manga-logo {
+    width: auto !important;
+    max-width: 148px;
+    min-height: 46px !important;
+    padding: 4px 8px !important;
+    align-items: center;
   }
 
-  .hero-cloud--one {
-    display: none;
+  .manga-logo img {
+    height: 36px !important;
+    width: auto !important;
+    max-width: 132px;
   }
 
-  .manga-hero__character {
-    height: 70%;
-    inset: 30% -25% auto -19%;
-  }
-
-  .rules-character-panel img {
-    height: 70%;
-    min-height: 0;
-    object-fit: contain;
-    object-position: center bottom;
-    inset: auto 0 0;
-  }
-
-  .rules-character-panel__bubble {
-    top: 16px;
-    left: 16px;
-    max-width: min(170px, calc(100% - 32px));
+  .manga-menu-button {
+    width: 42px;
+    height: 42px;
+    flex: 0 0 42px;
   }
 
   .manga-mobile-menu {
-    max-height: calc(100vh - 74px);
-    max-height: calc(100dvh - 74px);
+    left: 10px;
+    right: 10px;
+    padding: 16px;
+    max-height: calc(100vh - 70px);
+    max-height: calc(100dvh - 70px);
+    box-shadow: 6px 6px 0 #11110f;
+  }
+
+  .manga-mobile-menu ul {
+    margin-bottom: 14px;
   }
 
   .manga-mobile-menu li a {
-    min-height: 44px;
+    min-height: 46px;
+    padding: 10px 12px;
+    font-size: 1.2rem;
+  }
+
+  .manga-mobile-menu .manga-button {
+    width: 100%;
+    min-height: 46px;
+  }
+
+  /* Hero Section Mobile Layout */
+  .manga-hero {
+    min-height: auto;
+    padding: 14px 14px 0 !important;
+  }
+
+  .manga-hero:before {
+    width: 94vw;
+    min-width: 0;
+    height: 360px;
+    inset: auto -14% 110px auto;
+    transform: rotate(2.5deg);
+    box-shadow: 8px 8px 0 var(--ink);
+  }
+
+  .hero-cloud--one,
+  .hero-cloud--two {
+    display: none;
+  }
+
+  .manga-hero__copy {
+    width: 100%;
+    padding: 14px 2px 10px;
+  }
+
+  .manga-hero__brand-lockup {
+    width: min(100%, 330px);
+    margin: 0 auto 6px 0;
+    padding: 8px 12px 10px;
   }
 
   .manga-hero__tagline {
+    margin-top: 14px;
+    font-size: clamp(1.02rem, 4.4vw, 1.25rem);
+    padding: 6px 10px;
     max-width: 100%;
+    white-space: normal;
+    overflow-wrap: break-word;
+    line-height: 1.15;
+  }
+
+  .manga-hero__intro {
+    margin-top: 14px;
+    font-size: 0.92rem;
+    line-height: 1.55;
+  }
+
+  .manga-hero__meta {
+    gap: 8px 12px;
+    margin-top: 16px;
+  }
+
+  .manga-hero__meta span {
+    font-size: 0.72rem;
+    gap: 5px;
+  }
+
+  .manga-hero__meta svg {
+    width: 15px;
+    height: 15px;
+  }
+
+  .manga-hero__actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    margin-top: 20px;
+  }
+
+  .manga-hero__actions .manga-button {
+    width: 100%;
+    min-height: 48px;
+  }
+
+  .manga-hero__actions .manga-text-link {
+    justify-content: center;
+    padding: 6px 0;
+  }
+
+  .manga-hero__art {
+    width: 100%;
+    min-height: 330px !important;
+    height: clamp(320px, 82vw, 390px);
+    margin-top: 8px;
+  }
+
+  .manga-hero__sun {
+    inset: 6% 4% 4% 4% !important;
+  }
+
+  .manga-hero__character {
+    width: 106% !important;
+    max-width: 390px !important;
+    height: 88% !important;
+    inset: auto 0 0 0 !important;
+    margin: 0 auto !important;
+    object-fit: contain !important;
+    object-position: bottom center !important;
+  }
+
+  .manga-hero__bubble {
+    max-width: 138px;
+    padding: 10px 12px;
+    font-size: 0.88rem;
+    top: 2%;
+    right: 0;
+  }
+
+  .manga-hero__sfx {
+    font-size: clamp(2rem, 8vw, 2.6rem);
+    top: 12%;
+    left: 2%;
+  }
+
+  .manga-hero__stamp {
+    width: 96px;
+    bottom: 4%;
+    right: 2%;
+    box-shadow: 4px 4px 0 var(--ink);
+  }
+
+  .manga-hero__stamp small {
+    font-size: 0.52rem;
+  }
+
+  .manga-hero__stamp strong {
+    font-size: 1.15rem;
+  }
+
+  .manga-hero__facts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .manga-hero__facts > div {
+    min-height: 60px;
+    padding: 10px 12px;
+    gap: 8px;
+    min-width: 0;
+  }
+
+  .manga-hero__facts strong {
+    font-size: 1.55rem;
+    min-width: 0;
+  }
+
+  .manga-hero__facts span {
+    font-size: 0.62rem;
+    letter-spacing: 0.08em;
+    min-width: 0;
+  }
+
+  /* Global Section Padding & Headings on Mobile */
+  .manga-section {
+    padding: 56px 14px !important;
+  }
+
+  .manga-section-heading {
+    margin-bottom: 28px;
+  }
+
+  .manga-chapter-label {
+    font-size: 0.64rem;
+    padding: 6px 9px;
+    margin-bottom: 12px;
+  }
+
+  .manga-section-heading h2 {
+    font-size: clamp(2.4rem, 11vw, 3.6rem) !important;
+    line-height: 0.92 !important;
+    overflow-wrap: break-word;
+  }
+
+  .manga-section-subtitle {
+    margin-top: 12px;
+    font-size: 0.9rem;
+    line-height: 1.55;
+  }
+
+  /* CH.01 Brief / About Section */
+  .brief-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .brief-lead {
+    padding: 24px 18px 26px;
+    box-shadow: 6px 6px 0 var(--manga-ink);
+    transform: none;
+  }
+
+  .brief-lead h3 {
+    font-size: clamp(2.1rem, 8.5vw, 2.8rem);
+    line-height: 0.95;
+  }
+
+  .brief-lead > p:not(.panel-eyebrow) {
+    margin: 16px 0;
+    font-size: 0.92rem;
+    line-height: 1.6;
+  }
+
+  .brief-lead__bubble {
+    display: none;
+  }
+
+  .brief-moves {
+    margin-top: 4px;
+    gap: 12px;
+  }
+
+  .brief-moves > div:nth-child(2) .brief-move {
+    margin-left: 0;
+  }
+
+  .brief-move {
+    grid-template-columns: 40px 26px 1fr;
+    gap: 10px;
+    padding: 15px 14px;
+    min-height: auto;
+    box-shadow: 5px 5px 0 var(--manga-ink);
+  }
+
+  .brief-move__number {
+    font-size: 1.75rem;
+  }
+
+  .brief-move > svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .brief-move h3 {
+    font-size: 1.4rem;
+  }
+
+  .brief-move p {
+    font-size: 0.82rem;
+    line-height: 1.45;
+  }
+
+  /* CH.02 Tracks / Projects Section */
+  .tracks-section {
+    min-height: auto;
+  }
+
+  .tracks-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .track-card {
+    min-height: auto;
+    box-shadow: 6px 6px 0 var(--manga-red);
+  }
+
+  .track-card--blue {
+    box-shadow: 6px 6px 0 var(--manga-ink);
+  }
+
+  .track-card__topline {
+    min-height: 52px;
+    padding: 10px 16px;
+  }
+
+  .track-card__body {
+    padding: 20px 18px;
+  }
+
+  .track-card__body h3 {
+    font-size: clamp(1.75rem, 7vw, 2.2rem);
+    margin: 8px 0 10px;
+  }
+
+  .track-card__body > span {
+    font-size: 0.86rem;
+    line-height: 1.55;
+  }
+
+  /* CH.03 Schedule / Timeline Section */
+  .schedule-stage {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .schedule-list {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .schedule-list:before {
+    display: none;
+  }
+
+  .schedule-card {
+    min-height: auto;
+    grid-template-columns: 48px 1fr;
+    gap: 12px;
+    padding: 16px;
+    box-shadow: 5px 5px 0 var(--manga-ink);
+  }
+
+  .schedule-list li:nth-child(2n) .schedule-card {
+    transform: none;
+  }
+
+  .schedule-card__number {
+    font-size: 2.4rem;
+  }
+
+  .schedule-card h3 {
+    font-size: 1.55rem;
+    margin: 6px 0 4px;
+  }
+
+  .schedule-feature {
+    min-height: 220px;
+    margin-top: 4px;
+    padding: 28px 18px 22px;
+    transform: none;
+    box-shadow: 6px 6px 0 var(--manga-yellow);
+  }
+
+  .schedule-feature strong {
+    font-size: 5rem;
+  }
+
+  .schedule-feature > span {
+    font-size: 1.75rem;
+    margin-top: 8px;
+  }
+
+  .schedule-feature p {
+    margin-top: 14px;
+    font-size: 0.78rem;
+  }
+
+  .schedule-character {
+    display: none !important;
+  }
+
+  /* CH.07 Wanted Poster / Card Generator Section */
+  #card-generator {
+    padding-top: 48px !important;
+    padding-bottom: 48px !important;
+  }
+
+  #card-generator .section-shell {
+    padding-left: 4px !important;
+    padding-right: 4px !important;
+  }
+
+  #card-generator .mb-12 {
+    margin-bottom: 24px !important;
+  }
+
+  #card-generator .lg\:col-span-6:first-child {
+    padding: 16px !important;
+    box-shadow: 5px 5px 0 #000000 !important;
+    border-width: 3px !important;
+  }
+
+  /* Prevent iOS Safari zoom on input focus */
+  #card-generator input[type="text"] {
+    font-size: 16px !important;
+  }
+
+  /* Wanted Poster Frame scaling for narrow viewports */
+  #card-generator #onehack-wanted-poster {
+    width: min(320px, calc(100vw - 64px)) !important;
+    max-width: 100% !important;
+  }
+
+  /* Interlude // Why Join (Crew Section) */
+  .crew-section {
+    padding-top: 96px !important;
+  }
+
+  .ink-ticker__track span {
+    padding: 12px 0;
+    font-size: clamp(1.5rem, 6vw, 2.2rem);
+  }
+
+  .reasons-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .reason-card {
+    min-height: 150px;
+    padding: 18px 14px;
+  }
+
+  .reason-card svg {
+    width: 26px;
+    height: 26px;
+  }
+
+  .reason-card h3 {
+    margin: 16px 0 6px;
+    font-size: 1.55rem;
+  }
+
+  .reason-card p {
+    font-size: 0.8rem;
+    line-height: 1.45;
+  }
+
+  /* CH.05 Rules / Guidelines Section */
+  .rules-layout {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+
+  .rules-book {
+    padding: 18px 14px;
+    box-shadow: 6px 6px 0 var(--manga-ink);
+  }
+
+  .rules-book__header {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    padding-bottom: 14px;
+  }
+
+  .rules-book li > div {
+    grid-template-columns: 36px 1fr;
+    gap: 10px;
+    padding: 14px 0;
+  }
+
+  .rules-book li > div > span {
+    font-size: 1.65rem;
+  }
+
+  .rules-book h3 {
+    font-size: 1.35rem;
+  }
+
+  .rules-book li p {
+    font-size: 0.82rem;
+    line-height: 1.5;
+  }
+
+  .rules-character-panel {
+    min-height: 300px !important;
+    height: 310px !important;
+    box-shadow: 6px 6px 0 var(--manga-ink);
+  }
+
+  .rules-character-panel img {
+    height: 88% !important;
+    width: auto !important;
+    max-width: 94% !important;
+    min-height: 0 !important;
+    object-fit: contain !important;
+    object-position: bottom center !important;
+    inset: auto 0 0 0 !important;
+    margin: 0 auto !important;
+  }
+
+  .rules-character-panel__bubble {
+    top: 14px;
+    left: 14px;
+    padding: 10px 14px;
+    font-size: 0.95rem;
+    max-width: min(160px, calc(100% - 28px));
+  }
+
+  /* CH.06 Organisers (Tier 1) & Tier 2 Members */
+  #organisers {
+    padding-top: 48px !important;
+    padding-bottom: 40px !important;
+  }
+
+  #organisers .mb-14 {
+    margin-bottom: 16px !important;
+  }
+
+  #organisers .mb-6.pb-2\.5 {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  #organisers .grid.grid-cols-1 {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 12px !important;
+  }
+
+  #organisers article {
+    padding: 8px !important;
+    box-shadow: 4px 4px 0 #111111 !important;
+  }
+
+  #organisers article h4 {
+    font-size: 1.05rem !important;
+  }
+
+  #organisers article .border-t-2 {
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  #tier2-members {
+    padding: 40px 14px !important;
+  }
+
+  #tier2-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 12px !important;
+  }
+
+  /* CH.07 FAQ Section */
+  .faq-list {
+    gap: 10px;
+  }
+
+  .faq-item {
+    box-shadow: 4px 4px 0 var(--manga-ink);
+  }
+
+  .faq-item.is-open {
+    box-shadow: 5px 5px 0 var(--manga-red);
+  }
+
+  .faq-item button {
+    min-height: 58px;
+    padding: 14px;
+    gap: 10px;
+  }
+
+  .faq-item button > span {
+    align-items: center;
+    gap: 10px;
+    font-size: 0.86rem;
+    min-width: 0;
+  }
+
+  .faq-item button em {
+    font-size: 1.2rem;
+  }
+
+  .faq-item button svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .faq-item__answer p {
+    padding: 0 14px 16px 14px;
+    font-size: 0.84rem;
+    line-height: 1.55;
+  }
+
+  /* Final Chapter // Register Section */
+  .register-section {
+    min-height: auto;
+    padding: 56px 14px !important;
+  }
+
+  .register-panel {
+    width: 100%;
+    padding: 32px 16px;
+    border-width: 4px;
+    box-shadow: 7px 7px 0 var(--manga-yellow);
+    transform: none;
+  }
+
+  .register-panel h2 {
+    font-size: clamp(3.1rem, 15vw, 4.6rem) !important;
+    line-height: 0.82 !important;
+  }
+
+  .register-panel h2 span {
+    -webkit-text-stroke-width: 2px;
+    text-shadow: 3px 3px 0 var(--manga-white);
+  }
+
+  .register-panel__intro {
+    margin-top: 18px;
+    font-size: 0.9rem;
+    line-height: 1.55;
+  }
+
+  .register-panel__facts {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    max-width: 100%;
+    gap: 10px 14px;
+    margin: 20px 0;
+  }
+
+  .register-panel__facts span {
+    font-size: 0.68rem;
+    max-width: 100%;
+  }
+
+  .register-panel .manga-button--paper {
+    width: 100%;
+    max-width: 260px;
+    min-height: 48px;
+  }
+
+  .register-panel small {
+    margin-top: 16px;
+    font-size: 0.62rem;
+    line-height: 1.45;
     overflow-wrap: anywhere;
   }
 
-  .manga-hero__facts > div,
-  .manga-hero__facts strong,
-  .manga-hero__facts span {
-    min-width: 0;
+  /* Footer Section */
+  .manga-footer {
+    padding: 44px 14px 22px !important;
+  }
+
+  .manga-footer__masthead {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    padding-bottom: 24px;
+  }
+
+  .manga-footer__logo {
+    width: min(100%, 260px);
+    box-shadow: 5px 5px 0 var(--manga-red);
+    padding: 6px 12px;
+    transform: none;
+  }
+
+  .manga-footer__cloud-mark {
+    width: 84px;
+    top: -44px;
+    right: 0;
+  }
+
+  .manga-footer__masthead > p {
+    font-size: 1.2rem;
+  }
+
+  .manga-footer__grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding: 28px 0;
+  }
+
+  .footer-label {
+    margin-bottom: 10px !important;
   }
 
   .footer-email {
     overflow-wrap: anywhere;
+    font-size: 0.82rem;
+  }
+
+  .manga-footer__bottom {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    padding-top: 18px;
+    font-size: 0.64rem;
   }
 }
 
+/* ==========================================================================
+   SMALL PHONE REFINEMENTS (<= 480px)
+   ========================================================================== */
 @media (max-width: 480px) {
-  .manga-nav__inner {
-    padding-right: 4px;
-  }
-
-  .manga-menu-button {
-    flex: 0 0 44px;
-  }
-
   .manga-mobile-menu {
     left: 8px;
     right: 8px;
@@ -103,30 +791,46 @@
   }
 
   .manga-mobile-menu li a {
-    min-height: 48px;
-    padding: 12px 9px;
-    font-size: 1.1rem;
+    min-height: 44px;
+    padding: 10px 8px;
+    font-size: 1.08rem;
   }
 
-  .manga-section-heading h2 {
-    overflow-wrap: anywhere;
+  /* Stack photo adjustment sliders cleanly for easy touch dragging */
+  #card-generator .grid.grid-cols-3 {
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
   }
 
-  .register-panel__facts {
-    width: 100%;
-    max-width: 100%;
+  /* Wanted Poster typography scaling on < 480px */
+  #card-generator #onehack-wanted-poster h3 {
+    font-size: clamp(1rem, 4.6vw, 1.45rem) !important;
   }
 
-  .register-panel__facts span {
-    max-width: 100%;
-    overflow-wrap: anywhere;
+  /* Compact 2x3 Why Join Grid on small phones */
+  .reason-card {
+    min-height: 132px;
+    padding: 14px 12px;
   }
 
-  .faq-item button {
-    gap: 10px;
+  .reason-card h3 {
+    font-size: 1.35rem;
+    margin: 10px 0 4px;
   }
 
-  .faq-item button > span {
-    min-width: 0;
+  .reason-card p {
+    font-size: 0.75rem;
+  }
+}
+
+/* ==========================================================================
+   ULTRA-NARROW PHONE SAFEGUARDS (<= 350px)
+   ========================================================================== */
+@media (max-width: 350px) {
+  .manga-hero__facts,
+  .reasons-grid,
+  #organisers .grid.grid-cols-1,
+  #tier2-grid {
+    grid-template-columns: 1fr !important;
   }
 }

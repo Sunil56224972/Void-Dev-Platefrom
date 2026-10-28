@@ -163,7 +163,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     const tier2=document.createElement('section');
     tier2.id='tier2-members';
-    tier2.style.cssText='background:#F7F2E7;border-top:8px solid #111;padding:60px 24px;background-image:radial-gradient(circle,rgba(0,0,0,0.06) 1px,transparent 1px);background-size:12px 12px;overflow:hidden;';
+    tier2.style.cssText='background:#F7F2E7;border-top:8px solid #111;padding:clamp(36px,6vw,60px) clamp(14px,3vw,24px);background-image:radial-gradient(circle,rgba(0,0,0,0.06) 1px,transparent 1px);background-size:12px 12px;overflow:hidden;';
     tier2.innerHTML=`
       <div style="max-width:1200px;margin:0 auto;">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:40px;border-bottom:4px solid #111;padding-bottom:16px;flex-wrap:wrap;gap:12px;">
@@ -174,7 +174,7 @@ document.addEventListener('DOMContentLoaded', () => {
             👥 ${members.length} MEMBERS
           </span>
         </div>
-        <div id="tier2-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:20px;justify-items:center;"></div>
+        <div id="tier2-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:14px;justify-items:center;"></div>
       </div>
     `;
     targetSection.parentNode.insertBefore(tier2,targetSection.nextSibling);

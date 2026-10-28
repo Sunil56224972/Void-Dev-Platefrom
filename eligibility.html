@@ -838,16 +838,32 @@
         box-shadow: 6px 6px 0 var(--manga-ink);
       }
       .directory-grid {
-        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
       }
     }
 
-    @media (max-width: 420px) {
+    @media (max-width: 480px) {
       .manga-header__eyebrow {
         display: none;
       }
       .manga-btn span.hide-xs {
         display: none;
+      }
+      .hud-active-bar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+      }
+      .hud-active-info {
+        text-align: center;
+      }
+      .hud-active-buttons {
+        width: 100%;
+      }
+      .hud-active-buttons .manga-btn {
+        flex: 1;
+        min-height: 38px;
       }
     }
   </style>
