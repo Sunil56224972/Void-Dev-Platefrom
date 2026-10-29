@@ -44,48 +44,83 @@ html, body {
   transform: none !important;
 }
 
+.rules-aside,
 .rules-character-panel {
-  display: flex !important;
-  align-items: flex-end !important;
-  justify-content: center !important;
-  min-height: 520px !important;
-  padding-top: 88px !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+}
+
+.rules-character-panel {
+  --sentry-h: clamp(380px, 35vw, 450px);
+  display: block !important;
+  min-height: calc(var(--sentry-h) + 46px) !important;
+  height: calc(var(--sentry-h) + 46px) !important;
+  padding: 0 !important;
 }
 
 .rules-character-panel img {
-  position: relative !important;
-  inset: auto !important;
-  flex: 0 0 auto !important;
+  position: absolute !important;
+  top: auto !important;
+  right: auto !important;
+  bottom: -16px !important;
+  left: 50% !important;
   aspect-ratio: 8 / 5 !important;
   width: auto !important;
   max-width: none !important;
-  height: clamp(360px, 34vw, 440px) !important;
+  height: var(--sentry-h) !important;
   min-height: 0 !important;
   object-fit: contain !important;
   object-position: bottom center !important;
-  margin: 0 0 -22px 0 !important;
-  transform: translateX(5.8%) !important;
+  margin: 0 !important;
+  transform: translateX(-44%) !important;
   filter: drop-shadow(3px 0 0 var(--manga-ink)) drop-shadow(-3px 0 0 var(--manga-ink)) drop-shadow(0 3px 0 var(--manga-ink)) !important;
 }
 
 .rules-character-panel__bubble {
-  padding: 16px 18px 18px !important;
+  top: auto !important;
+  left: auto !important;
+  right: calc(50% + var(--sentry-h) * 0.09) !important;
+  bottom: calc(var(--sentry-h) * 0.845) !important;
+  width: max-content !important;
+  max-width: min(168px, calc(50% - var(--sentry-h) * 0.09 - 10px)) !important;
+  padding: 13px 16px !important;
+  border-radius: 50% !important;
+  box-shadow: none !important;
+  filter: drop-shadow(4px 4px 0 var(--manga-ink)) !important;
+  transform: rotate(-4deg) !important;
+}
+
+.rules-character-panel__bubble:before {
+  content: "" !important;
+  position: absolute !important;
+  right: -13px !important;
+  bottom: 4px !important;
+  width: 14px !important;
+  height: 12px !important;
+  border-radius: 50% !important;
+  background: var(--manga-white) !important;
+  border: 3px solid var(--manga-ink) !important;
 }
 
 .rules-character-panel__bubble:after {
-  width: 15px !important;
-  height: 15px !important;
-  bottom: -6px !important;
-  right: 34% !important;
-  border-top: 0 !important;
-  border-left: 0 !important;
-  border-right: 3px solid var(--manga-ink) !important;
-  border-bottom: 3px solid var(--manga-ink) !important;
-  transform: rotate(40deg) !important;
+  content: "" !important;
+  position: absolute !important;
+  top: auto !important;
+  left: auto !important;
+  right: -24px !important;
+  bottom: -3px !important;
+  width: 8px !important;
+  height: 8px !important;
+  border-radius: 50% !important;
+  background: var(--manga-white) !important;
+  border: 2.5px solid var(--manga-ink) !important;
+  transform: none !important;
 }
 
 .manga-hero__bubble {
   padding: 15px 18px 18px !important;
+  box-shadow: none !important;
+  filter: drop-shadow(4px 4px 0 var(--ink)) !important;
 }
 
 .manga-hero__bubble:after {
@@ -632,33 +667,56 @@ html, body {
   }
 
   .rules-character-panel {
-    min-height: 365px !important;
-    height: auto !important;
-    padding-top: 82px !important;
+    --sentry-h: clamp(265px, 72vw, 330px);
+    min-height: calc(var(--sentry-h) + 38px) !important;
+    height: calc(var(--sentry-h) + 38px) !important;
+    padding: 0 !important;
     box-shadow: 6px 6px 0 var(--manga-ink);
   }
 
   .rules-character-panel img {
-    position: relative !important;
-    inset: auto !important;
-    flex: 0 0 auto !important;
+    position: absolute !important;
+    top: auto !important;
+    right: auto !important;
+    bottom: -14px !important;
+    left: 50% !important;
     aspect-ratio: 8 / 5 !important;
     width: auto !important;
     max-width: none !important;
-    height: clamp(275px, 76vw, 340px) !important;
+    height: var(--sentry-h) !important;
     min-height: 0 !important;
     object-fit: contain !important;
     object-position: bottom center !important;
-    margin: 0 0 -17px 0 !important;
-    transform: translateX(5.8%) !important;
+    margin: 0 !important;
+    transform: translateX(-42%) !important;
   }
 
   .rules-character-panel__bubble {
-    top: 14px !important;
-    left: 14px !important;
-    padding: 12px 15px 15px !important;
-    font-size: 0.96rem !important;
-    max-width: 155px !important;
+    top: auto !important;
+    left: auto !important;
+    right: calc(50% + var(--sentry-h) * 0.082) !important;
+    bottom: calc(var(--sentry-h) * 0.84) !important;
+    width: max-content !important;
+    max-width: min(146px, calc(50% - var(--sentry-h) * 0.082 - 8px)) !important;
+    padding: 10px 12px !important;
+    font-size: 0.86rem !important;
+    filter: drop-shadow(3px 3px 0 var(--manga-ink)) !important;
+  }
+
+  .rules-character-panel__bubble:before {
+    right: -11px !important;
+    bottom: 4px !important;
+    width: 12px !important;
+    height: 10px !important;
+    border-width: 2.5px !important;
+  }
+
+  .rules-character-panel__bubble:after {
+    right: -20px !important;
+    bottom: -2px !important;
+    width: 7px !important;
+    height: 7px !important;
+    border-width: 2px !important;
   }
 
   /* CH.06 Organisers (Tier 1) & Tier 2 Members */
